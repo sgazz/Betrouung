@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 @MainActor
@@ -6,11 +7,15 @@ final class LocalDataService: DataService, ObservableObject {
     @Published private(set) var lists: [ShoppingList]
 
     init(
-        profiles: [CareProfile] = MockData.profiles,
+        profiles: [CareProfile],
         lists: [ShoppingList] = []
     ) {
         self.profiles = profiles
         self.lists = lists
+    }
+
+    convenience init() {
+        self.init(profiles: MockData.profiles, lists: [])
     }
 
     // MARK: - Care profiles

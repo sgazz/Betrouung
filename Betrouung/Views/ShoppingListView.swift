@@ -58,20 +58,7 @@ struct ShoppingListView: View {
                                     }
                                     Haptics.lightTap()
                                 } label: {
-                                    HStack(spacing: 12) {
-                                        Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
-                                            .font(.title3)
-                                            .foregroundStyle(item.isChecked ? .accentColor : .secondary)
-                                        Text(item.name)
-                                            .font(.body)
-                                            .foregroundStyle(.primary)
-                                        Spacer()
-                                    }
-                                    .padding(12)
-                                    .frame(minHeight: 56)
-                                    .background(Color(.secondarySystemBackground))
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                                    .contentShape(Rectangle())
+                                    itemRow(item)
                                 }
                                 .buttonStyle(PressableButtonStyle())
                                 .swipeActions {
@@ -132,7 +119,7 @@ struct ShoppingListView: View {
                     Image(systemName: "plus")
                         .font(.headline)
                         .frame(width: 50, height: 50)
-                        .background(.accentColor)
+                        .background(Color.accentColor)
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
@@ -155,6 +142,23 @@ struct ShoppingListView: View {
         .padding(.horizontal, 16)
         .padding(.top, 12)
         .padding(.bottom, 8)
+    }
+
+    private func itemRow(_ item: ShoppingItem) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
+                .font(.title3)
+                .foregroundStyle(item.isChecked ? Color.accentColor : .secondary)
+            Text(item.name)
+                .font(.body)
+                .foregroundStyle(.primary)
+            Spacer()
+        }
+        .padding(12)
+        .frame(minHeight: 56)
+        .background(Color(.secondarySystemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .contentShape(Rectangle())
     }
 }
 

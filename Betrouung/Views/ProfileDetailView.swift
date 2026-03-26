@@ -75,7 +75,7 @@ struct ProfileDetailView: View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.headline)
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
             Text(title)
                 .font(.headline)
                 .foregroundStyle(.primary)

@@ -6,7 +6,14 @@ struct NearbyStoresView: View {
     @StateObject private var viewModel = StoreViewModel()
 
     var body: some View {
-        Group {
+        content
+            .navigationTitle("Marketi")
+            .navigationBarTitleDisplayMode(.large)
+            .onAppear { viewModel.onAppear() }
+    }
+
+    @ViewBuilder
+    private var content: some View {
             switch viewModel.state {
             case .idle:
                 permissionRequestView
@@ -59,7 +66,7 @@ struct NearbyStoresView: View {
                             HStack(spacing: 12) {
                                 Image(systemName: "building.2.crop.circle.fill")
                                     .font(.title3)
-                                    .foregroundStyle(.accentColor)
+                                    .foregroundStyle(Color.accentColor)
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(store.name)
                                         .font(.body.weight(.bold))
@@ -74,7 +81,7 @@ struct NearbyStoresView: View {
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 6)
                                     .background(Color(.tertiarySystemBackground))
-                                    .foregroundStyle(store.isOpen ? .accentColor : .secondary)
+                                    .foregroundStyle(store.isOpen ? Color.accentColor : .secondary)
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
                             }
                             .padding(16)
@@ -89,17 +96,13 @@ struct NearbyStoresView: View {
                 }
                 .listStyle(.plain)
             }
-        }
-        .navigationTitle("Marketi")
-        .navigationBarTitleDisplayMode(.large)
-        .onAppear { viewModel.onAppear() }
     }
 
     private var permissionRequestView: some View {
         VStack(spacing: 16) {
             Image(systemName: "location.circle")
                 .font(.system(size: 48))
-                .foregroundStyle(.accentColor)
+                .foregroundStyle(Color.accentColor)
             Text("Pristup lokaciji")
                 .font(.title2.bold())
             Text("Za prikaz marketa u blizini potrebno je da dozvoliš pristup lokaciji.")
@@ -126,11 +129,9 @@ struct NearbyStoresView: View {
 
     private func openInAppleMaps(_ store: Store) {
         guard let latitude = store.latitude, let longitude = store.longitude else { return }
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let placemark = MKPlacemark(coordinate: coordinate)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = store.name
-        mapItem.openInMaps()
+        let encodedName = store.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        guard let url = URL(string: "http://maps.apple.com/?ll=\(latitude),\(longitude)&q=\(encodedName)") else { return }
+        UIApplication.shared.open(url)
     }
 
     private var storesWithCoordinates: [Store] {

@@ -22,8 +22,8 @@ final class StoreViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     init(
-        locationManager: LocationManager = LocationManager(),
-        storeService: StoreService = StoreService()
+        locationManager: LocationManager,
+        storeService: StoreService
     ) {
         self.locationManager = locationManager
         self.storeService = storeService
@@ -50,6 +50,10 @@ final class StoreViewModel: ObservableObject {
                 self?.state = .error(error)
             }
             .store(in: &cancellables)
+    }
+
+    convenience init() {
+        self.init(locationManager: LocationManager(), storeService: StoreService())
     }
 
     func onAppear() {

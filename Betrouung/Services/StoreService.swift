@@ -25,7 +25,7 @@ final class StoreService {
 
         let uniqueMapItems = deduplicate(allMapItems)
         return uniqueMapItems.map { item in
-            let coordinate = item.placemark.coordinate
+            let coordinate = item.location.coordinate
             let itemLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
             let distanceKm = userLocation.distance(from: itemLocation) / 1_000
 
@@ -62,8 +62,9 @@ final class StoreService {
 
         for item in items {
             let name = item.name ?? ""
-            let lat = item.placemark.coordinate.latitude
-            let lon = item.placemark.coordinate.longitude
+            let coordinate = item.location.coordinate
+            let lat = coordinate.latitude
+            let lon = coordinate.longitude
             let key = "\(name.lowercased())_\(lat)_\(lon)"
             if seen.insert(key).inserted {
                 result.append(item)
