@@ -4,12 +4,81 @@ import SwiftUI
 struct NearbyStoresView: View {
     let profile: CareProfile
     @StateObject private var viewModel = StoreViewModel()
+    @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
+
+    private var titleText: String {
+        L10n.t("nearby.title", languageCode: selectedLanguageRaw)
+    }
+
+    private var loadingText: String {
+        L10n.t("nearby.loading", languageCode: selectedLanguageRaw)
+    }
+
+    private var permissionDeniedTitle: String {
+        L10n.t("nearby.permission_denied_title", languageCode: selectedLanguageRaw)
+    }
+
+    private var permissionDeniedDesc: String {
+        L10n.t("nearby.permission_denied_desc", languageCode: selectedLanguageRaw)
+    }
+
+    private var permissionRestrictedTitle: String {
+        L10n.t("nearby.permission_restricted_title", languageCode: selectedLanguageRaw)
+    }
+
+    private var permissionRestrictedDesc: String {
+        L10n.t("nearby.permission_restricted_desc", languageCode: selectedLanguageRaw)
+    }
+
+    private var emptyTitle: String {
+        L10n.t("nearby.empty_title", languageCode: selectedLanguageRaw)
+    }
+
+    private var emptyDesc: String {
+        L10n.t("nearby.empty_desc", languageCode: selectedLanguageRaw)
+    }
+
+    private var errorTitle: String {
+        L10n.t("nearby.error_title", languageCode: selectedLanguageRaw)
+    }
+
+    private var kmAwayFormat: String {
+        L10n.t("nearby.km_away_format", languageCode: selectedLanguageRaw)
+    }
+
+    private var openText: String {
+        L10n.t("nearby.status.open", languageCode: selectedLanguageRaw)
+    }
+
+    private var closedText: String {
+        L10n.t("nearby.status.closed", languageCode: selectedLanguageRaw)
+    }
+
+    private var locationAccessTitle: String {
+        L10n.t("nearby.location_access_title", languageCode: selectedLanguageRaw)
+    }
+
+    private var locationAccessDesc: String {
+        L10n.t("nearby.location_access_desc", languageCode: selectedLanguageRaw)
+    }
+
+    private var allowLocationText: String {
+        L10n.t("nearby.allow_location", languageCode: selectedLanguageRaw)
+    }
 
     var body: some View {
-        content
-            .navigationTitle("Marketi")
-            .navigationBarTitleDisplayMode(.large)
-            .onAppear { viewModel.onAppear() }
+        ZStack {
+            AppBackgroundView()
+            content
+        }
+        .navigationTitle(titleText)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                AppBrandTitleView(title: "DailyCareCart")
+            }
+        }
+        .onAppear { viewModel.onAppear() }
     }
 
     @ViewBuilder
@@ -20,32 +89,35 @@ struct NearbyStoresView: View {
             case .loading:
                 VStack(spacing: 12) {
                     ProgressView()
-                    Text("Loading nearby stores...")
+                    Text(loadingText)
                         .font(.body)
                         .foregroundStyle(.secondary)
                 }
+                .padding(20)
+                .appGlassCard()
+                .padding(.horizontal, 16)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .permissionDenied:
                 stateView(
-                    title: "Dozvola odbijena",
+                    title: permissionDeniedTitle,
                     systemImage: "location.slash",
-                    description: "Omogući lokaciju u Settings da bismo prikazali markete u blizini."
+                    description: permissionDeniedDesc
                 )
             case .permissionRestricted:
                 stateView(
-                    title: "Lokacija nije dostupna",
+                    title: permissionRestrictedTitle,
                     systemImage: "location.fill.viewfinder",
-                    description: "Pristup lokaciji je ograničen na ovom uređaju."
+                    description: permissionRestrictedDesc
                 )
             case .empty:
                 stateView(
-                    title: "No stores found",
+                    title: emptyTitle,
                     systemImage: "building.2.crop.circle",
-                    description: "Try again in a different area."
+                    description: emptyDesc
                 )
             case .error(let message):
                 stateView(
-                    title: "Greška",
+                    title: errorTitle,
                     systemImage: "exclamationmark.triangle",
                     description: message
                 )
@@ -66,35 +138,35 @@ struct NearbyStoresView: View {
                             HStack(spacing: 12) {
                                 Image(systemName: "building.2.crop.circle.fill")
                                     .font(.title3)
-                                    .foregroundStyle(Color.accentColor)
+                                    .foregroundStyle(AppPalette.orange)
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(store.name)
                                         .font(.body.weight(.bold))
                                         .foregroundStyle(.primary)
-                                    Text(String(format: "%.1f km away", store.distance))
+                                    Text(String(format: kmAwayFormat, store.distance))
                                         .font(.body)
                                         .foregroundStyle(.secondary)
                                 }
                                 Spacer()
-                                Text(store.isOpen ? "Open" : "Closed")
+                                Text(store.isOpen ? openText : closedText)
                                     .font(.body)
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 6)
-                                    .background(Color(.tertiarySystemBackground))
-                                    .foregroundStyle(store.isOpen ? Color.accentColor : .secondary)
+                                    .background((store.isOpen ? AppPalette.green : AppPalette.red).opacity(0.14))
+                                    .foregroundStyle(store.isOpen ? AppPalette.green : AppPalette.red)
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
                             }
                             .padding(16)
                             .frame(minHeight: 74)
-                            .background(Color(.secondarySystemBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .appGlassCard()
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(SecondaryCardButtonStyle())
                         .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                         .listRowBackground(Color.clear)
                     }
                 }
                 .listStyle(.plain)
+                .scrollContentBackground(.hidden)
             }
     }
 
@@ -102,20 +174,22 @@ struct NearbyStoresView: View {
         VStack(spacing: 16) {
             Image(systemName: "location.circle")
                 .font(.system(size: 48))
-                .foregroundStyle(Color.accentColor)
-            Text("Pristup lokaciji")
+                .foregroundStyle(AppPalette.orange)
+            Text(locationAccessTitle)
                 .font(.title2.bold())
-            Text("Za prikaz marketa u blizini potrebno je da dozvoliš pristup lokaciji.")
+            Text(locationAccessDesc)
                 .multilineTextAlignment(.center)
                 .font(.body)
                 .foregroundStyle(.secondary)
-            Button("Dozvoli lokaciju") {
+            Button(allowLocationText) {
                 viewModel.requestPermission()
             }
             .buttonStyle(.borderedProminent)
             .frame(minHeight: 50)
         }
-        .padding(16)
+        .padding(20)
+        .appGlassCard()
+        .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
@@ -160,6 +234,7 @@ struct NearbyStoresView: View {
         }
         .frame(height: 170)
         .clipShape(RoundedRectangle(cornerRadius: 16))
+        .appGlassCard()
     }
 }
 

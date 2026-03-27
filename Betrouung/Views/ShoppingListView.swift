@@ -6,6 +6,31 @@ struct ShoppingListView: View {
     @StateObject private var viewModel: ShoppingListViewModel
     @State private var newItemName = ""
     @State private var isShowingShoppingMode = false
+    @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
+
+    private var suggestedItemsTitle: String {
+        L10n.t("shopping.suggested_items", languageCode: selectedLanguageRaw)
+    }
+
+    private var noItemsText: String {
+        L10n.t("shopping.no_items", languageCode: selectedLanguageRaw)
+    }
+
+    private var deleteText: String {
+        L10n.t("shopping.delete", languageCode: selectedLanguageRaw)
+    }
+
+    private var screenTitle: String {
+        L10n.t("shopping.title", languageCode: selectedLanguageRaw)
+    }
+
+    private var addItemPlaceholder: String {
+        L10n.t("shopping.add_item_placeholder", languageCode: selectedLanguageRaw)
+    }
+
+    private var shoppingModeText: String {
+        L10n.t("shopping.start_mode", languageCode: selectedLanguageRaw)
+    }
 
     init(profile: CareProfile, dataService: any DataService) {
         self.profile = profile
@@ -13,74 +38,84 @@ struct ShoppingListView: View {
     }
 
     var body: some View {
-        List {
-            let suggestions = viewModel.getSuggestedItems()
+        ZStack {
+            AppBackgroundView()
 
-            if !suggestions.isEmpty {
-                Section("Suggested items") {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 12) {
-                            ForEach(suggestions, id: \.self) { suggestion in
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.18)) {
-                                        viewModel.addItem(name: suggestion, category: .Lebensmittel)
-                                    }
-                                    Haptics.lightTap()
-                                } label: {
-                                    Label(suggestion.capitalized, systemImage: "plus.circle.fill")
-                                        .font(.headline)
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 8)
-                                        .background(Color(.secondarySystemBackground))
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                                }
-                                .buttonStyle(PressableButtonStyle())
-                                .frame(minHeight: 50)
-                            }
-                        }
-                        .padding(.vertical, 8)
-                    }
-                }
-            }
+            List {
+                let suggestions = viewModel.getSuggestedItems()
 
-            if viewModel.groupedItems.isEmpty {
-                ContentUnavailableView("Nema stavki", systemImage: "cart.badge.plus")
-                    .frame(maxWidth: .infinity, minHeight: 220)
-            } else {
-                ForEach(ShoppingItemCategory.allCases, id: \.self) { category in
-                    let categoryItems = viewModel.groupedItems[category] ?? []
-                    if !categoryItems.isEmpty {
-                        Section(category.rawValue) {
-                            ForEach(categoryItems) { item in
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.16)) {
-                                        viewModel.toggleIsChecked(itemId: item.id)
-                                    }
-                                    Haptics.lightTap()
-                                } label: {
-                                    itemRow(item)
-                                }
-                                .buttonStyle(PressableButtonStyle())
-                                .swipeActions {
-                                    Button(role: .destructive) {
-                                        withAnimation(.easeInOut(duration: 0.16)) {
-                                            viewModel.deleteItem(itemId: item.id)
+                if !suggestions.isEmpty {
+                    Section(suggestedItemsTitle) {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 12) {
+                                ForEach(suggestions, id: \.self) { suggestion in
+                                    Button {
+                                        withAnimation(.easeInOut(duration: 0.18)) {
+                                            viewModel.addItem(name: suggestion, category: .Lebensmittel)
                                         }
                                         Haptics.lightTap()
                                     } label: {
-                                        Label("Obriši", systemImage: "trash")
+                                        Label(suggestion.capitalized, systemImage: "plus.circle.fill")
+                                            .font(.headline)
+                                            .foregroundStyle(AppPalette.orange)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 8)
+                                            .appGlassCard()
                                     }
+                                    .buttonStyle(SecondaryCardButtonStyle())
+                                    .frame(minHeight: 50)
                                 }
-                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                            }
+                            .padding(.vertical, 8)
+                        }
+                    }
+                }
+
+                if viewModel.groupedItems.isEmpty {
+                    ContentUnavailableView(noItemsText, systemImage: "cart.badge.plus")
+                        .frame(maxWidth: .infinity, minHeight: 220)
+                } else {
+                    ForEach(ShoppingItemCategory.allCases, id: \.self) { category in
+                        let categoryItems = viewModel.groupedItems[category] ?? []
+                        if !categoryItems.isEmpty {
+                            Section(category.rawValue) {
+                                ForEach(categoryItems) { item in
+                                    Button {
+                                        withAnimation(.easeInOut(duration: 0.16)) {
+                                            viewModel.toggleIsChecked(itemId: item.id)
+                                        }
+                                        Haptics.lightTap()
+                                    } label: {
+                                        itemRow(item)
+                                    }
+                                    .buttonStyle(SecondaryCardButtonStyle())
+                                    .swipeActions {
+                                        Button(role: .destructive) {
+                                            withAnimation(.easeInOut(duration: 0.16)) {
+                                                viewModel.deleteItem(itemId: item.id)
+                                            }
+                                            Haptics.lightTap()
+                                        } label: {
+                                            Label(deleteText, systemImage: "trash")
+                                        }
+                                    }
+                                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                                }
                             }
                         }
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
         }
         .listStyle(.plain)
-        .navigationTitle("Kupovina")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle(screenTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                AppBrandTitleView(title: "DailyCareCart")
+            }
+        }
         .safeAreaInset(edge: .bottom) {
             addItemBar
                 .background(.ultraThinMaterial)
@@ -94,10 +129,9 @@ struct ShoppingListView: View {
     private var addItemBar: some View {
         VStack(spacing: 12) {
             HStack(spacing: 8) {
-                TextField("Add item...", text: $newItemName)
-                    .textFieldStyle(.roundedBorder)
+                TextField(addItemPlaceholder, text: $newItemName)
                     .font(.body)
-                    .frame(minHeight: 50)
+                    .appInputFieldStyle()
                     .submitLabel(.done)
                     .onSubmit {
                         withAnimation(.easeInOut(duration: 0.18)) {
@@ -109,6 +143,8 @@ struct ShoppingListView: View {
                         newItemName = ""
                     }
 
+                VoiceInputButton(text: $newItemName)
+
                 Button {
                     withAnimation(.easeInOut(duration: 0.18)) {
                         viewModel.addItem(name: newItemName, category: .Lebensmittel)
@@ -119,11 +155,11 @@ struct ShoppingListView: View {
                     Image(systemName: "plus")
                         .font(.headline)
                         .frame(width: 50, height: 50)
-                        .background(Color.accentColor)
+                        .background(AppPalette.orange)
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
-                .buttonStyle(PressableButtonStyle())
+                .buttonStyle(PrimaryCTAButtonStyle())
                 .disabled(newItemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
 
@@ -131,13 +167,13 @@ struct ShoppingListView: View {
                 Haptics.lightTap()
                 isShowingShoppingMode = true
             } label: {
-                Label("Start Shopping Mode", systemImage: "cart.fill")
+                Label(shoppingModeText, systemImage: "cart.fill")
                     .font(.headline)
+                    .foregroundStyle(AppPalette.orange)
                     .frame(maxWidth: .infinity, minHeight: 50)
-                    .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .appGlassCard()
             }
-            .buttonStyle(PressableButtonStyle())
+            .buttonStyle(SecondaryCardButtonStyle())
         }
         .padding(.horizontal, 16)
         .padding(.top, 12)
@@ -148,7 +184,7 @@ struct ShoppingListView: View {
         HStack(spacing: 12) {
             Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
                 .font(.title3)
-                .foregroundStyle(item.isChecked ? Color.accentColor : .secondary)
+                .foregroundStyle(item.isChecked ? AppPalette.green : .secondary)
             Text(item.name)
                 .font(.body)
                 .foregroundStyle(.primary)
@@ -156,8 +192,7 @@ struct ShoppingListView: View {
         }
         .padding(12)
         .frame(minHeight: 56)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .appGlassCard()
         .contentShape(Rectangle())
     }
 }

@@ -2,34 +2,83 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var viewModel: CareProfileViewModel
+    @EnvironmentObject private var container: AppContainer
 
     @State private var isPresentingAdd = false
     @State private var newName = ""
+    @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
+
+    private var noProfilesTitle: String {
+        L10n.t("home.no_profiles_title", languageCode: selectedLanguageRaw)
+    }
+
+    private var noProfilesSubtitle: String {
+        L10n.t("home.no_profiles_subtitle", languageCode: selectedLanguageRaw)
+    }
+
+    private var calendarText: String {
+        L10n.t("home.calendar_reminders", languageCode: selectedLanguageRaw)
+    }
+
+    private var titleText: String {
+        "DailyCareCart"
+    }
+
+    private var addProfileLabel: String {
+        L10n.t("home.add_profile", languageCode: selectedLanguageRaw)
+    }
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
+            AppBackgroundView()
+
             List {
                 if viewModel.filteredProfiles.isEmpty {
                     VStack(spacing: 12) {
                         Image(systemName: "person.3.sequence.fill")
                             .font(.system(size: 42))
                             .foregroundStyle(.secondary)
-                        Text("No profiles yet")
+                        Text(noProfilesTitle)
                             .font(.title2.bold())
                             .foregroundStyle(.primary)
-                        Text("Tap + to add your first care profile.")
+                        Text(noProfilesSubtitle)
                             .font(.body)
                             .foregroundStyle(.secondary)
                     }
+                    .padding(20)
+                    .appGlassCard()
                     .frame(maxWidth: .infinity, minHeight: 260)
                     .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 } else {
+                    Section {
+                        NavigationLink {
+                            CalendarView(dataService: container.dataService)
+                        } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: "calendar")
+                                    .foregroundStyle(AppPalette.orange)
+                                Text(calendarText)
+                                    .font(.headline)
+                                    .foregroundStyle(.primary)
+                                Spacer()
+                            }
+                            .padding(16)
+                            .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+                            .appGlassCard()
+                        }
+                        .buttonStyle(SecondaryCardButtonStyle())
+                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                        .listRowBackground(Color.clear)
+                    }
+
                     ForEach(viewModel.filteredProfiles) { profile in
                         NavigationLink {
                             ProfileDetailView(profile: profile)
                         } label: {
                             profileCard(profile)
                         }
+                        .buttonStyle(SecondaryCardButtonStyle())
                         .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                         .listRowBackground(Color.clear)
                         .accessibilityHint("Otvori detalje profila")
@@ -43,6 +92,7 @@ struct HomeView: View {
                 }
             }
             .listStyle(.plain)
+            .scrollContentBackground(.hidden)
 
             Button {
                 newName = ""
@@ -51,24 +101,32 @@ struct HomeView: View {
                 Image(systemName: "plus")
                     .font(.headline)
                     .frame(width: 56, height: 56)
-                    .background(Color.accentColor)
+                    .background(AppPalette.orange)
                     .foregroundStyle(.white)
                     .clipShape(Circle())
                     .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
             }
             .padding(.trailing, 16)
             .padding(.bottom, 16)
-            .accessibilityLabel("Dodaj profil")
+            .accessibilityLabel(addProfileLabel)
         }
-        .navigationTitle("Betreuung")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle(titleText)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                AppBrandTitleView(title: titleText)
+            }
+        }
         .searchable(text: $viewModel.query, placement: .navigationBarDrawer(displayMode: .automatic))
         .sheet(isPresented: $isPresentingAdd) {
             NavigationStack {
                 Form {
                     Section("Ime") {
-                        TextField("npr. Milica J.", text: $newName)
-                            .textInputAutocapitalization(.words)
+                        HStack(spacing: 8) {
+                            TextField("npr. Milica J.", text: $newName)
+                                .textInputAutocapitalization(.words)
+                            VoiceInputButton(text: $newName)
+                        }
                     }
                 }
                 .navigationTitle("Novi profil")
@@ -103,7 +161,7 @@ struct HomeView: View {
 
             HStack(spacing: 8) {
                 Image(systemName: "person.2.fill")
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(AppPalette.green)
                 Text("\(profile.numberOfPeople) osoba")
                     .font(.body)
                     .foregroundStyle(.secondary)
@@ -111,9 +169,7 @@ struct HomeView: View {
         }
         .padding(16)
         .frame(maxWidth: .infinity, minHeight: 110, alignment: .leading)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 2)
+        .appGlassCard()
     }
 }
 

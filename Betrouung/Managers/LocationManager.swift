@@ -23,11 +23,28 @@ final class LocationManager: NSObject, ObservableObject {
     }
 
     func requestCurrentLocation() {
+        // Ensure location services are enabled on the device
         guard CLLocationManager.locationServicesEnabled() else {
             locationError = "Lokacione usluge su isključene."
             return
         }
-        manager.requestLocation()
+
+        switch authorizationStatus {
+        case .notDetermined:
+            // Request authorization; we'll get a callback to update `authorizationStatus`
+            manager.requestWhenInUseAuthorization()
+            // Do not call requestLocation() yet; wait for authorization callback
+        case .restricted, .denied:
+            // Surface a clear error to the UI
+            locationError = "Pristup lokaciji je odbijen ili ograničen."
+        case .authorizedWhenInUse, .authorizedAlways:
+            // Safe to request the current location
+            locationError = nil
+            manager.requestLocation()
+        @unknown default:
+            // Handle any future cases conservatively
+            locationError = "Nepoznat status autorizacije lokacije."
+        }
     }
 }
 
@@ -35,6 +52,11 @@ extension LocationManager: CLLocationManagerDelegate {
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         Task { @MainActor in
             self.authorizationStatus = manager.authorizationStatus
+            // If we just became authorized, attempt to fetch the location now
+            if self.authorizationStatus == .authorizedWhenInUse || self.authorizationStatus == .authorizedAlways {
+                self.locationError = nil
+                self.manager.requestLocation()
+            }
         }
     }
 
@@ -51,4 +73,3 @@ extension LocationManager: CLLocationManagerDelegate {
         }
     }
 }
-
