@@ -30,6 +30,19 @@
 "home.calendar_reminders" = "Kalendar i podsetnici";
 "home.add_profile" = "Dodaj profil";
 
+"create_profile.title" = "Novi profil";
+"create_profile.section.basic" = "Osnovno";
+"create_profile.section.details" = "Detalji";
+"create_profile.section.notes" = "Beleške";
+"create_profile.name.placeholder" = "npr. Milica J.";
+"create_profile.address.placeholder" = "Adresa";
+"create_profile.preferred_store.placeholder" = "Preferirani market (opciono)";
+"create_profile.notes.placeholder" = "Beleške (opciono)";
+"create_profile.number_of_people" = "Broj osoba";
+"create_profile.validation.empty_name" = "Ime je obavezno.";
+"create_profile.validation.short_name" = "Ime mora imati najmanje 2 karaktera.";
+"create_profile.validation.duplicate_name" = "Profil sa ovim imenom već postoji.";
+
 "profile.actions" = "Akcije";
 "profile.shopping_list" = "Lista za kupovinu";
 "profile.nearby_stores" = "Marketi u blizini";

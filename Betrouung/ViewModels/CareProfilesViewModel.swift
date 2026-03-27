@@ -3,6 +3,12 @@ import Foundation
 
 @MainActor
 final class CareProfileViewModel: ObservableObject {
+    enum CreateProfileNameError {
+        case empty
+        case tooShort
+        case duplicate
+    }
+
     @Published private(set) var profiles: [CareProfile] = []
     @Published var query: String = ""
     
@@ -20,19 +26,57 @@ final class CareProfileViewModel: ObservableObject {
     }
 
     func addProfile(name: String) {
+        _ = addProfile(
+            name: name,
+            address: "",
+            numberOfPeople: 1,
+            notes: "",
+            preferredStore: nil
+        )
+    }
+
+    @discardableResult
+    func addProfile(
+        name: String,
+        address: String,
+        numberOfPeople: Int,
+        notes: String,
+        preferredStore: String?
+    ) -> Bool {
+        guard validateProfileName(name) == nil else { return false }
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return }
+        let trimmedAddress = address.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedNotes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedPreferredStore = preferredStore?.trimmingCharacters(in: .whitespacesAndNewlines)
         profiles.insert(
             CareProfile(
                 name: trimmed,
-                address: "",
-                numberOfPeople: 1,
-                notes: "",
-                preferredStore: nil
+                address: trimmedAddress,
+                numberOfPeople: max(1, numberOfPeople),
+                notes: trimmedNotes,
+                preferredStore: (trimmedPreferredStore?.isEmpty == true) ? nil : trimmedPreferredStore
             ),
             at: 0
         )
         dataService.addCareProfile(profiles[0])
+        return true
+    }
+
+    func validateProfileName(_ rawName: String) -> CreateProfileNameError? {
+        let trimmed = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty { return .empty }
+        if trimmed.count < 2 { return .tooShort }
+        if profileNameExists(trimmed) { return .duplicate }
+        return nil
+    }
+
+    private func profileNameExists(_ rawName: String) -> Bool {
+        let normalized = normalize(rawName)
+        return profiles.contains { normalize($0.name) == normalized }
+    }
+
+    private func normalize(_ text: String) -> String {
+        text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
     }
 
     func deleteProfile(id: UUID) {

@@ -30,6 +30,19 @@
 "home.calendar_reminders" = "Kalender und Erinnerungen";
 "home.add_profile" = "Profil hinzufuegen";
 
+"create_profile.title" = "Neues Profil";
+"create_profile.section.basic" = "Grunddaten";
+"create_profile.section.details" = "Details";
+"create_profile.section.notes" = "Notizen";
+"create_profile.name.placeholder" = "z. B. Milica J.";
+"create_profile.address.placeholder" = "Adresse";
+"create_profile.preferred_store.placeholder" = "Bevorzugter Markt (optional)";
+"create_profile.notes.placeholder" = "Notizen (optional)";
+"create_profile.number_of_people" = "Anzahl der Personen";
+"create_profile.validation.empty_name" = "Name ist erforderlich.";
+"create_profile.validation.short_name" = "Der Name muss mindestens 2 Zeichen haben.";
+"create_profile.validation.duplicate_name" = "Ein Profil mit diesem Namen existiert bereits.";
+
 "profile.actions" = "Aktionen";
 "profile.shopping_list" = "Einkaufsliste";
 "profile.nearby_stores" = "Supermaerkte in der Naehe";

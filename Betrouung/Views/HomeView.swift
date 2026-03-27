@@ -5,7 +5,6 @@ struct HomeView: View {
     @EnvironmentObject private var container: AppContainer
 
     @State private var isPresentingAdd = false
-    @State private var newName = ""
     @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
 
     private var noProfilesTitle: String {
@@ -95,7 +94,6 @@ struct HomeView: View {
             .scrollContentBackground(.hidden)
 
             Button {
-                newName = ""
                 isPresentingAdd = true
             } label: {
                 Image(systemName: "plus")
@@ -119,32 +117,7 @@ struct HomeView: View {
         }
         .searchable(text: $viewModel.query, placement: .navigationBarDrawer(displayMode: .automatic))
         .sheet(isPresented: $isPresentingAdd) {
-            NavigationStack {
-                Form {
-                    Section("Ime") {
-                        HStack(spacing: 8) {
-                            TextField("npr. Milica J.", text: $newName)
-                                .textInputAutocapitalization(.words)
-                            VoiceInputButton(text: $newName)
-                        }
-                    }
-                }
-                .navigationTitle("Novi profil")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Otkaži") { isPresentingAdd = false }
-                    }
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Sačuvaj") {
-                            viewModel.addProfile(name: newName)
-                            isPresentingAdd = false
-                        }
-                        .disabled(newName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                    }
-                }
-            }
-            .presentationDetents([.medium])
+            CreateProfileView(profilesViewModel: viewModel)
         }
     }
 
@@ -174,8 +147,11 @@ struct HomeView: View {
 }
 
 #Preview {
-    NavigationStack {
-        HomeView(viewModel: CareProfileViewModel(dataService: LocalDataService()))
+    let container = AppContainer()
+    let viewModel = CareProfileViewModel(dataService: container.dataService)
+    return NavigationStack {
+        HomeView(viewModel: viewModel)
+            .environmentObject(container)
     }
 }
 
