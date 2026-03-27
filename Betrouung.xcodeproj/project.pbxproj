@@ -192,6 +192,8 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				sr,
 			);
 			mainGroup = CF9C40322F75761B00DA32D5;
 			minimizedProjectReferenceProxies = 1;
@@ -400,7 +402,10 @@
 				DEVELOPMENT_TEAM = 83F7KY8L5Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DailyCareCart;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Lokaciju koristimo da prikazemo supermarkete u vasoj blizini.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "DailyCareCart koristi mikrofon za glasovni unos teksta.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "DailyCareCart koristi prepoznavanje govora za glasovni unos teksta.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -433,7 +438,10 @@
 				DEVELOPMENT_TEAM = 83F7KY8L5Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DailyCareCart;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Lokaciju koristimo da prikazemo supermarkete u vasoj blizini.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "DailyCareCart koristi mikrofon za glasovni unos teksta.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "DailyCareCart koristi prepoznavanje govora za glasovni unos teksta.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

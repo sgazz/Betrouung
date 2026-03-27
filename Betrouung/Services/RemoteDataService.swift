@@ -17,5 +17,13 @@ final class RemoteDataService: DataService {
     func toggleItem(listId: UUID, itemId: UUID) {}
     func addItem(listId: UUID, name: String, category: ShoppingItemCategory) {}
     func deleteItem(listId: UUID, itemId: UUID) {}
+
+    func allCalendarEntries() -> [CalendarEntry] { [] }
+    func calendarEntries(on date: Date) -> [CalendarEntry] { [] }
+    func calendarEntries(for profileId: UUID) -> [CalendarEntry] { [] }
+    func addCalendarEntry(_ entry: CalendarEntry) {}
+    func updateCalendarEntry(_ entry: CalendarEntry) {}
+    func deleteCalendarEntry(id: UUID) {}
+    func toggleCalendarEntryCompleted(id: UUID) {}
 }
 

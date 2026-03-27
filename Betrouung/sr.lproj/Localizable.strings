@@ -1,0 +1,84 @@
+"splash.slogan.1" = "Pametna kupovina za svakodnevnu negu.";
+"splash.slogan.2" = "Vise vremena za negu. Manje vremena za kupovinu.";
+"splash.slogan.3" = "Nega jednostavnija. Kupovina pametnija.";
+"splash.tap_continue" = "Dodirnite bilo gde za nastavak";
+"splash.info_button" = "Informacije za korisnike";
+"splash.info_nav_title" = "Informacije";
+"common.got_it" = "Razumem";
+"common.cancel" = "Otkazi";
+"info.subtitle" = "Pametna kupovina za svakodnevnu negu.";
+"info.intro" = "DailyCareCart pomaze negovateljima da organizuju i pojednostave svakodnevnu kupovinu za osobe o kojima brinu.";
+"info.with_app" = "Uz ovu aplikaciju mozete:";
+"info.bullets" = "• Upravljati sa vise profila nege\n• Kreirati i ponovo koristiti liste za kupovinu\n• Brzo dodavati i oznacavati stavke\n• Pronaci obliznje supermarkete\n• Ustedeti vreme i smanjiti stres";
+"info.one_hand" = "Dizajnirano za jednostavno koriscenje jednom rukom - gde god da ste.";
+"info.outro" = "Olaksajte negu. Svakog dana.";
+
+"login.sign_in" = "Prijava";
+"login.create_account" = "Kreiranje naloga";
+"login.subtitle.sign_in" = "Vise vremena za negu. Manje vremena za kupovinu.";
+"login.subtitle.create_account" = "Nega jednostavnija. Kupovina pametnija.";
+"login.remember_me" = "Zapamti me";
+"login.forgot_password" = "Zaboravili ste lozinku?";
+"login.button.sign_in" = "Prijavi se";
+"login.button.create_account" = "Kreiraj nalog";
+"login.reset.title" = "Reset lozinke";
+"login.reset.hint" = "Unesite email za reset lozinke.";
+"login.reset.send" = "Posalji reset link";
+
+"home.no_profiles_title" = "Jos nema profila";
+"home.no_profiles_subtitle" = "Tapnite + da dodate prvi profil nege.";
+"home.calendar_reminders" = "Kalendar i podsetnici";
+"home.add_profile" = "Dodaj profil";
+
+"profile.actions" = "Akcije";
+"profile.shopping_list" = "Lista za kupovinu";
+"profile.nearby_stores" = "Marketi u blizini";
+"profile.notes" = "Beleške";
+"profile.address_not_provided" = "Adresa nije uneta";
+"profile.no_notes" = "Nema dodatnih napomena.";
+
+"shopping.title" = "Kupovina";
+"shopping.suggested_items" = "Predlozene stavke";
+"shopping.no_items" = "Nema stavki";
+"shopping.delete" = "Obrisi";
+"shopping.add_item_placeholder" = "Dodaj stavku...";
+"shopping.start_mode" = "Pokreni shopping rezim";
+
+"shoppingmode.finish" = "Zavrsi kupovinu";
+
+"nearby.title" = "Marketi";
+"nearby.loading" = "Ucitavanje obliznjih marketa...";
+"nearby.permission_denied_title" = "Dozvola odbijena";
+"nearby.permission_denied_desc" = "Omoguci lokaciju u Settings da bismo prikazali markete u blizini.";
+"nearby.permission_restricted_title" = "Lokacija nije dostupna";
+"nearby.permission_restricted_desc" = "Pristup lokaciji je ogranicen na ovom uredjaju.";
+"nearby.empty_title" = "Nema pronadjenih marketa";
+"nearby.empty_desc" = "Pokusaj ponovo u drugom podrucju.";
+"nearby.error_title" = "Greska";
+"nearby.km_away_format" = "%.1f km udaljeno";
+"nearby.status.open" = "Otvoreno";
+"nearby.status.closed" = "Zatvoreno";
+"nearby.location_access_title" = "Pristup lokaciji";
+"nearby.location_access_desc" = "Za prikaz marketa u blizini potrebno je da dozvolis pristup lokaciji.";
+"nearby.allow_location" = "Dozvoli lokaciju";
+
+"calendar.title" = "Kalendar";
+"calendar.select_day" = "Izaberi dan";
+"calendar.profile" = "Profil";
+"calendar.all_profiles" = "Svi profili";
+"calendar.entries_for_day" = "Unosi za izabrani dan";
+"calendar.no_entries" = "Nema unosa";
+"calendar.done" = "Gotovo";
+"calendar.delete" = "Obrisi";
+"calendar.add_entry_a11y" = "Dodaj kalendarski unos";
+"calendar.sheet.type" = "Tip";
+"calendar.sheet.entry_type" = "Tip unosa";
+"calendar.sheet.shopping_event" = "Kupovni dogadjaj";
+"calendar.sheet.care_reminder" = "Podsetnik za negu";
+"calendar.sheet.no_profile" = "Bez profila";
+"calendar.sheet.details" = "Detalji";
+"calendar.sheet.title" = "Naslov";
+"calendar.sheet.notes" = "Beleške";
+"calendar.sheet.date_time" = "Datum i vreme";
+"calendar.sheet.new_entry" = "Novi unos";
+"calendar.sheet.save" = "Sacuvaj";

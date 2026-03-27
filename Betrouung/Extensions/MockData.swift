@@ -24,6 +24,31 @@ enum MockData {
         Store(name: "Tempo", distance: 4.2, isOpen: true),
     ]
 
+    static var calendarEntries: [CalendarEntry] {
+        guard let first = profiles.first else { return [] }
+        let now = Date()
+        let calendar = Calendar.current
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: now) ?? now
+        let nextWeek = calendar.date(byAdding: .day, value: 7, to: now) ?? now
+
+        return [
+            CalendarEntry(
+                profileId: first.id,
+                title: "Weekly grocery",
+                notes: "Milk, fruits, and hygiene essentials",
+                scheduledAt: tomorrow,
+                kind: .shopping
+            ),
+            CalendarEntry(
+                profileId: first.id,
+                title: "Medication reminder",
+                notes: "Check evening medication box",
+                scheduledAt: nextWeek,
+                kind: .careReminder
+            )
+        ]
+    }
+
     static func makeLocalDataServiceForPreviews() -> LocalDataService {
         let store = LocalDataService()
         let profile = profiles[0]

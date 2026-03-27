@@ -1,0 +1,84 @@
+"splash.slogan.1" = "Intelligentes Einkaufen fuer die taegliche Pflege.";
+"splash.slogan.2" = "Mehr Zeit fuer Pflege. Weniger Zeit fuer Einkaufen.";
+"splash.slogan.3" = "Pflege einfach gemacht. Einkaufen intelligenter gemacht.";
+"splash.tap_continue" = "Tippen Sie irgendwo zum Fortfahren";
+"splash.info_button" = "Informationen fuer Nutzer";
+"splash.info_nav_title" = "Informationen";
+"common.got_it" = "Verstanden";
+"common.cancel" = "Abbrechen";
+"info.subtitle" = "Intelligentes Einkaufen fuer die taegliche Pflege.";
+"info.intro" = "DailyCareCart hilft Pflegepersonen, den taeglichen Einkauf fuer die Menschen, die sie betreuen, zu organisieren und zu vereinfachen.";
+"info.with_app" = "Mit dieser App koennen Sie:";
+"info.bullets" = "• Mehrere Pflegeprofile verwalten\n• Einkaufslisten erstellen und wiederverwenden\n• Artikel schnell hinzufuegen und abhaken\n• Supermaerkte in der Naehe finden\n• Zeit sparen und Stress reduzieren";
+"info.one_hand" = "Fuer eine einfache Einhandbedienung entwickelt - egal, wo Sie sind.";
+"info.outro" = "Pflege jeden Tag einfacher machen.";
+
+"login.sign_in" = "Anmelden";
+"login.create_account" = "Konto erstellen";
+"login.subtitle.sign_in" = "Mehr Zeit fuer Pflege. Weniger Zeit fuer Einkaufen.";
+"login.subtitle.create_account" = "Pflege einfach gemacht. Einkaufen intelligenter gemacht.";
+"login.remember_me" = "Angemeldet bleiben";
+"login.forgot_password" = "Passwort vergessen?";
+"login.button.sign_in" = "Anmelden";
+"login.button.create_account" = "Konto erstellen";
+"login.reset.title" = "Passwort zuruecksetzen";
+"login.reset.hint" = "Geben Sie Ihre E-Mail fuer das Zuruecksetzen ein.";
+"login.reset.send" = "Reset-Link senden";
+
+"home.no_profiles_title" = "Noch keine Profile";
+"home.no_profiles_subtitle" = "Tippen Sie auf +, um Ihr erstes Pflegeprofil hinzuzufuegen.";
+"home.calendar_reminders" = "Kalender und Erinnerungen";
+"home.add_profile" = "Profil hinzufuegen";
+
+"profile.actions" = "Aktionen";
+"profile.shopping_list" = "Einkaufsliste";
+"profile.nearby_stores" = "Supermaerkte in der Naehe";
+"profile.notes" = "Notizen";
+"profile.address_not_provided" = "Adresse nicht angegeben";
+"profile.no_notes" = "Keine zusaetzlichen Notizen.";
+
+"shopping.title" = "Einkauf";
+"shopping.suggested_items" = "Vorgeschlagene Artikel";
+"shopping.no_items" = "Keine Artikel";
+"shopping.delete" = "Loeschen";
+"shopping.add_item_placeholder" = "Artikel hinzufuegen...";
+"shopping.start_mode" = "Einkaufsmodus starten";
+
+"shoppingmode.finish" = "Einkauf abschliessen";
+
+"nearby.title" = "Supermaerkte";
+"nearby.loading" = "Lade Supermaerkte in der Naehe...";
+"nearby.permission_denied_title" = "Berechtigung verweigert";
+"nearby.permission_denied_desc" = "Aktivieren Sie den Standort in den Einstellungen, um nahe Supermaerkte zu sehen.";
+"nearby.permission_restricted_title" = "Standort nicht verfuegbar";
+"nearby.permission_restricted_desc" = "Der Standortzugriff ist auf diesem Geraet eingeschraenkt.";
+"nearby.empty_title" = "Keine Supermaerkte gefunden";
+"nearby.empty_desc" = "Versuchen Sie es in einem anderen Gebiet erneut.";
+"nearby.error_title" = "Fehler";
+"nearby.km_away_format" = "%.1f km entfernt";
+"nearby.status.open" = "Offen";
+"nearby.status.closed" = "Geschlossen";
+"nearby.location_access_title" = "Standortzugriff";
+"nearby.location_access_desc" = "Der Standortzugriff ist erforderlich, um nahe Supermaerkte anzuzeigen.";
+"nearby.allow_location" = "Standort erlauben";
+
+"calendar.title" = "Kalender";
+"calendar.select_day" = "Tag waehlen";
+"calendar.profile" = "Profil";
+"calendar.all_profiles" = "Alle Profile";
+"calendar.entries_for_day" = "Eintraege fuer den ausgewaehlten Tag";
+"calendar.no_entries" = "Keine Eintraege";
+"calendar.done" = "Erledigt";
+"calendar.delete" = "Loeschen";
+"calendar.add_entry_a11y" = "Kalendereintrag hinzufuegen";
+"calendar.sheet.type" = "Typ";
+"calendar.sheet.entry_type" = "Eintragstyp";
+"calendar.sheet.shopping_event" = "Einkaufsereignis";
+"calendar.sheet.care_reminder" = "Pflegeerinnerung";
+"calendar.sheet.no_profile" = "Kein Profil";
+"calendar.sheet.details" = "Details";
+"calendar.sheet.title" = "Titel";
+"calendar.sheet.notes" = "Notizen";
+"calendar.sheet.date_time" = "Datum und Uhrzeit";
+"calendar.sheet.new_entry" = "Neuer Eintrag";
+"calendar.sheet.save" = "Speichern";

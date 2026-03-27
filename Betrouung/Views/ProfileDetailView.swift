@@ -3,34 +3,68 @@ import SwiftUI
 struct ProfileDetailView: View {
     let profile: CareProfile
     @EnvironmentObject private var container: AppContainer
+    @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
+
+    private var actionsTitle: String {
+        L10n.t("profile.actions", languageCode: selectedLanguageRaw)
+    }
+
+    private var shoppingListText: String {
+        L10n.t("profile.shopping_list", languageCode: selectedLanguageRaw)
+    }
+
+    private var nearbyStoresText: String {
+        L10n.t("profile.nearby_stores", languageCode: selectedLanguageRaw)
+    }
+
+    private var notesTitle: String {
+        L10n.t("profile.notes", languageCode: selectedLanguageRaw)
+    }
+
+    private var emptyAddressText: String {
+        L10n.t("profile.address_not_provided", languageCode: selectedLanguageRaw)
+    }
+
+    private var emptyNotesText: String {
+        L10n.t("profile.no_notes", languageCode: selectedLanguageRaw)
+    }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                profileHeaderCard
+        ZStack {
+            AppBackgroundView()
 
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Actions")
-                        .font(.headline)
-                        .foregroundStyle(.secondary)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    profileHeaderCard
 
-                    NavigationLink {
-                        ShoppingListView(profile: profile, dataService: container.dataService)
-                    } label: {
-                        actionButtonLabel(title: "Shopping List", icon: "checklist")
-                    }
+                    VStack(alignment: .leading, spacing: 12) {
+                        AppSectionHeader(title: actionsTitle)
 
-                    NavigationLink {
-                        NearbyStoresView(profile: profile)
-                    } label: {
-                        actionButtonLabel(title: "Nearby Stores", icon: "mappin.and.ellipse")
+                        NavigationLink {
+                            ShoppingListView(profile: profile, dataService: container.dataService)
+                        } label: {
+                            actionButtonLabel(title: shoppingListText, icon: "checklist")
+                        }
+                        .buttonStyle(SecondaryCardButtonStyle())
+
+                        NavigationLink {
+                            NearbyStoresView(profile: profile)
+                        } label: {
+                            actionButtonLabel(title: nearbyStoresText, icon: "mappin.and.ellipse")
+                        }
+                        .buttonStyle(SecondaryCardButtonStyle())
                     }
                 }
+                .padding(16)
             }
-            .padding(16)
         }
         .navigationTitle(profile.name)
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                AppBrandTitleView(title: "DailyCareCart")
+            }
+        }
     }
 
     private var profileHeaderCard: some View {
@@ -42,17 +76,17 @@ struct ProfileDetailView: View {
             HStack(spacing: 8) {
                 Image(systemName: "house")
                     .foregroundStyle(.secondary)
-                Text(profile.address.isEmpty ? "Adresa nije uneta" : profile.address)
+                Text(profile.address.isEmpty ? emptyAddressText : profile.address)
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.leading)
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Notes")
+                Text(notesTitle)
                     .font(.headline)
                     .foregroundStyle(.secondary)
-                Text(profile.notes.isEmpty ? "Nema dodatnih napomena." : profile.notes)
+                Text(profile.notes.isEmpty ? emptyNotesText : profile.notes)
                     .font(.body)
                     .foregroundStyle(.primary)
             }
@@ -67,15 +101,14 @@ struct ProfileDetailView: View {
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .appGlassCard()
     }
 
     private func actionButtonLabel(title: String, icon: String) -> some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.headline)
-                .foregroundStyle(Color.accentColor)
+                .foregroundStyle(AppPalette.orange)
             Text(title)
                 .font(.headline)
                 .foregroundStyle(.primary)
@@ -86,8 +119,7 @@ struct ProfileDetailView: View {
         }
         .padding(16)
         .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .appGlassCard()
     }
 }
 

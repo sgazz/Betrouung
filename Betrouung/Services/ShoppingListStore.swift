@@ -5,17 +5,20 @@ import Foundation
 final class LocalDataService: DataService, ObservableObject {
     @Published private(set) var profiles: [CareProfile]
     @Published private(set) var lists: [ShoppingList]
+    @Published private(set) var calendarEntriesStore: [CalendarEntry]
 
     init(
         profiles: [CareProfile],
-        lists: [ShoppingList] = []
+        lists: [ShoppingList] = [],
+        calendarEntries: [CalendarEntry] = []
     ) {
         self.profiles = profiles
         self.lists = lists
+        self.calendarEntriesStore = calendarEntries
     }
 
     convenience init() {
-        self.init(profiles: MockData.profiles, lists: [])
+        self.init(profiles: MockData.profiles, lists: [], calendarEntries: MockData.calendarEntries)
     }
 
     // MARK: - Care profiles
@@ -80,6 +83,42 @@ final class LocalDataService: DataService, ObservableObject {
     func deleteItem(listId: UUID, itemId: UUID) {
         guard let listIndex = lists.firstIndex(where: { $0.id == listId }) else { return }
         lists[listIndex].items.removeAll { $0.id == itemId }
+    }
+
+    // MARK: - Calendar entries
+    func allCalendarEntries() -> [CalendarEntry] {
+        calendarEntriesStore.sorted { $0.scheduledAt < $1.scheduledAt }
+    }
+
+    func calendarEntries(on date: Date) -> [CalendarEntry] {
+        let calendar = Calendar.current
+        return calendarEntriesStore
+            .filter { calendar.isDate($0.scheduledAt, inSameDayAs: date) }
+            .sorted { $0.scheduledAt < $1.scheduledAt }
+    }
+
+    func calendarEntries(for profileId: UUID) -> [CalendarEntry] {
+        calendarEntriesStore
+            .filter { $0.profileId == profileId }
+            .sorted { $0.scheduledAt < $1.scheduledAt }
+    }
+
+    func addCalendarEntry(_ entry: CalendarEntry) {
+        calendarEntriesStore.append(entry)
+    }
+
+    func updateCalendarEntry(_ entry: CalendarEntry) {
+        guard let index = calendarEntriesStore.firstIndex(where: { $0.id == entry.id }) else { return }
+        calendarEntriesStore[index] = entry
+    }
+
+    func deleteCalendarEntry(id: UUID) {
+        calendarEntriesStore.removeAll { $0.id == id }
+    }
+
+    func toggleCalendarEntryCompleted(id: UUID) {
+        guard let index = calendarEntriesStore.firstIndex(where: { $0.id == id }) else { return }
+        calendarEntriesStore[index].isCompleted.toggle()
     }
 }
 

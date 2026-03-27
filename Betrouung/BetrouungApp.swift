@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct BetrouungApp: App {
+struct DailyCareCartApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()

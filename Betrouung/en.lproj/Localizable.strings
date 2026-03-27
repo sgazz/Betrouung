@@ -1,0 +1,84 @@
+"splash.slogan.1" = "Smart shopping for daily care.";
+"splash.slogan.2" = "More time for care. Less time for shopping.";
+"splash.slogan.3" = "Care made simple. Shopping made smarter.";
+"splash.tap_continue" = "Tap anywhere to continue";
+"splash.info_button" = "Information for users";
+"splash.info_nav_title" = "Information";
+"common.got_it" = "Got it";
+"common.cancel" = "Cancel";
+"info.subtitle" = "Smart shopping for daily care.";
+"info.intro" = "DailyCareCart helps caregivers organize and simplify everyday shopping for the people they care for.";
+"info.with_app" = "With this app you can:";
+"info.bullets" = "• Manage multiple care profiles\n• Create and reuse shopping lists\n• Quickly add and check items\n• Find nearby supermarkets\n• Save time and reduce stress";
+"info.one_hand" = "Designed for simple, one-hand use - wherever you are.";
+"info.outro" = "Make care easier. Every day.";
+
+"login.sign_in" = "Sign In";
+"login.create_account" = "Create Account";
+"login.subtitle.sign_in" = "More time for care. Less time for shopping.";
+"login.subtitle.create_account" = "Care made simple. Shopping made smarter.";
+"login.remember_me" = "Remember me";
+"login.forgot_password" = "Forgot your password?";
+"login.button.sign_in" = "Sign In";
+"login.button.create_account" = "Create Account";
+"login.reset.title" = "Password Reset";
+"login.reset.hint" = "Enter your email for password reset.";
+"login.reset.send" = "Send reset link";
+
+"home.no_profiles_title" = "No profiles yet";
+"home.no_profiles_subtitle" = "Tap + to add your first care profile.";
+"home.calendar_reminders" = "Calendar & Reminders";
+"home.add_profile" = "Add profile";
+
+"profile.actions" = "Actions";
+"profile.shopping_list" = "Shopping List";
+"profile.nearby_stores" = "Nearby Stores";
+"profile.notes" = "Notes";
+"profile.address_not_provided" = "Address not provided";
+"profile.no_notes" = "No additional notes.";
+
+"shopping.title" = "Shopping";
+"shopping.suggested_items" = "Suggested items";
+"shopping.no_items" = "No items";
+"shopping.delete" = "Delete";
+"shopping.add_item_placeholder" = "Add item...";
+"shopping.start_mode" = "Start Shopping Mode";
+
+"shoppingmode.finish" = "Finish Shopping";
+
+"nearby.title" = "Nearby Stores";
+"nearby.loading" = "Loading nearby stores...";
+"nearby.permission_denied_title" = "Permission denied";
+"nearby.permission_denied_desc" = "Enable location in Settings to see nearby stores.";
+"nearby.permission_restricted_title" = "Location unavailable";
+"nearby.permission_restricted_desc" = "Location access is restricted on this device.";
+"nearby.empty_title" = "No stores found";
+"nearby.empty_desc" = "Try again in a different area.";
+"nearby.error_title" = "Error";
+"nearby.km_away_format" = "%.1f km away";
+"nearby.status.open" = "Open";
+"nearby.status.closed" = "Closed";
+"nearby.location_access_title" = "Location access";
+"nearby.location_access_desc" = "Location access is needed to show nearby stores.";
+"nearby.allow_location" = "Allow location";
+
+"calendar.title" = "Calendar";
+"calendar.select_day" = "Select day";
+"calendar.profile" = "Profile";
+"calendar.all_profiles" = "All profiles";
+"calendar.entries_for_day" = "Entries for selected day";
+"calendar.no_entries" = "No entries";
+"calendar.done" = "Done";
+"calendar.delete" = "Delete";
+"calendar.add_entry_a11y" = "Add calendar entry";
+"calendar.sheet.type" = "Type";
+"calendar.sheet.entry_type" = "Entry type";
+"calendar.sheet.shopping_event" = "Shopping event";
+"calendar.sheet.care_reminder" = "Care reminder";
+"calendar.sheet.no_profile" = "No profile";
+"calendar.sheet.details" = "Details";
+"calendar.sheet.title" = "Title";
+"calendar.sheet.notes" = "Notes";
+"calendar.sheet.date_time" = "Date and time";
+"calendar.sheet.new_entry" = "New Entry";
+"calendar.sheet.save" = "Save";

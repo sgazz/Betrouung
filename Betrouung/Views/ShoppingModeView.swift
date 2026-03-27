@@ -3,6 +3,11 @@ import SwiftUI
 struct ShoppingModeView: View {
     @ObservedObject var viewModel: ShoppingListViewModel
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
+
+    private var finishText: String {
+        L10n.t("shoppingmode.finish", languageCode: selectedLanguageRaw)
+    }
 
     private var displayItems: [ShoppingItem] {
         viewModel.items.sorted { lhs, rhs in
@@ -15,7 +20,12 @@ struct ShoppingModeView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            LinearGradient(
+                colors: [Color.black, AppPalette.orange.opacity(0.35), Color(.darkGray)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
             ScrollView {
                 LazyVStack(spacing: 12) {
@@ -29,23 +39,22 @@ struct ShoppingModeView: View {
                             HStack(spacing: 12) {
                                 Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
                                     .font(.system(size: 40, weight: .bold))
-                                    .foregroundStyle(item.isChecked ? .green : .white)
+                                    .foregroundStyle(item.isChecked ? AppPalette.green : .white)
 
                                 Text(item.name)
                                     .font(.system(size: 34, weight: .bold, design: .rounded))
                                     .foregroundStyle(.white)
-                                    .strikethrough(item.isChecked, color: .green)
+                                    .strikethrough(item.isChecked, color: AppPalette.green)
                                     .multilineTextAlignment(.leading)
 
                                 Spacer()
                             }
                             .padding(.vertical, 20)
                             .padding(.horizontal, 16)
-                            .background(Color.white.opacity(0.08))
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .background(Color.white.opacity(0.11), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .contentShape(Rectangle())
                         }
-                        .buttonStyle(PressableButtonStyle())
+                        .buttonStyle(SecondaryCardButtonStyle())
                         .frame(maxWidth: .infinity, minHeight: 92)
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                     }
@@ -60,14 +69,14 @@ struct ShoppingModeView: View {
                 Haptics.softSuccess()
                 dismiss()
             } label: {
-                Label("Finish Shopping", systemImage: "checkmark")
+                Label(finishText, systemImage: "checkmark")
                     .font(.headline)
                     .frame(maxWidth: .infinity, minHeight: 56)
-                    .background(Color.green)
-                    .foregroundStyle(.black)
+                    .background(AppPalette.green)
+                    .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
             }
-            .buttonStyle(PressableButtonStyle())
+            .buttonStyle(PrimaryCTAButtonStyle())
             .padding(.horizontal, 16)
             .padding(.top, 8)
             .padding(.bottom, 10)
