@@ -22,6 +22,18 @@ struct HomeView: View {
         L10n.t("home.calendar_reminders", languageCode: selectedLanguageRaw)
     }
 
+    /// Naslov reda za kalendar zavisi od Care / Cart moda.
+    private var calendarRowTitle: String {
+        switch accent {
+        case .care:
+            return L10n.t("home.calendar_row_care", languageCode: selectedLanguageRaw)
+        case .cart:
+            return L10n.t("home.calendar_row_cart", languageCode: selectedLanguageRaw)
+        case .neutral:
+            return calendarText
+        }
+    }
+
     private var titleText: String {
         "DailyCareCart"
     }
@@ -64,7 +76,7 @@ struct HomeView: View {
                             HStack(spacing: 10) {
                                 Image(systemName: "calendar")
                                     .foregroundStyle(accent.primary)
-                                Text(calendarText)
+                                Text(calendarRowTitle)
                                     .font(.headline)
                                     .foregroundStyle(.primary)
                                 Spacer()

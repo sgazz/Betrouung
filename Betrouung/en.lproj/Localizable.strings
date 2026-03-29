@@ -36,6 +36,8 @@
 "home.no_profiles_title" = "No profiles yet";
 "home.no_profiles_subtitle" = "Tap + to add your first care profile.";
 "home.calendar_reminders" = "Calendar & Reminders";
+"home.calendar_row_care" = "Calendar & care reminders";
+"home.calendar_row_cart" = "Calendar & shopping";
 "home.add_profile" = "Add profile";
 
 "create_profile.title" = "New Profile";
@@ -60,8 +62,19 @@
 "create_profile.validation.empty_guardian_contact" = "Guardian contact is required.";
 
 "profile.actions" = "Actions";
+"profile.daily_routine" = "Daily routine";
+"profile.shopping_section" = "Shopping";
 "profile.shopping_list" = "Shopping List";
 "profile.nearby_stores" = "Nearby Stores";
+
+"routine.title" = "Daily routine";
+"routine.empty" = "No steps yet. Tap Edit to add your daily schedule.";
+"routine.edit" = "Edit";
+"routine.done_editing" = "Done";
+"routine.add_step" = "Add step";
+"routine.step_placeholder" = "Activity";
+"routine.today" = "Today";
+"routine.time" = "Time";
 "profile.notes" = "Notes";
 "profile.contacts" = "Contacts";
 "profile.address_not_provided" = "Address not provided";

@@ -36,6 +36,8 @@
 "home.no_profiles_title" = "Jos nema profila";
 "home.no_profiles_subtitle" = "Tapnite + da dodate prvi profil nege.";
 "home.calendar_reminders" = "Kalendar i podsetnici";
+"home.calendar_row_care" = "Kalendar i podsetnici za negu";
+"home.calendar_row_cart" = "Kalendar i kupovina";
 "home.add_profile" = "Dodaj profil";
 
 "create_profile.title" = "Novi profil";
@@ -60,8 +62,19 @@
 "create_profile.validation.empty_guardian_contact" = "Kontakt staratelja je obavezan.";
 
 "profile.actions" = "Akcije";
+"profile.daily_routine" = "Dnevna rutina";
+"profile.shopping_section" = "Kupovina";
 "profile.shopping_list" = "Lista za kupovinu";
 "profile.nearby_stores" = "Marketi u blizini";
+
+"routine.title" = "Dnevna rutina";
+"routine.empty" = "Još nema koraka. Tapnite Izmeni da dodate raspored.";
+"routine.edit" = "Izmeni";
+"routine.done_editing" = "Gotovo";
+"routine.add_step" = "Dodaj korak";
+"routine.step_placeholder" = "Aktivnost";
+"routine.today" = "Danas";
+"routine.time" = "Vreme";
 "profile.notes" = "Beleške";
 "profile.contacts" = "Kontakti";
 "profile.address_not_provided" = "Adresa nije uneta";

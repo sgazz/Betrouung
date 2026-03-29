@@ -25,5 +25,11 @@ protocol DataService: AnyObject {
     func updateCalendarEntry(_ entry: CalendarEntry)
     func deleteCalendarEntry(id: UUID)
     func toggleCalendarEntryCompleted(id: UUID)
+
+    // Daily routine (Care) — šablon po profilu + štikliranje po danu
+    func dailyRoutineTemplate(for profileId: UUID) -> DailyRoutineTemplate?
+    func saveDailyRoutineTemplate(_ template: DailyRoutineTemplate)
+    func routineCompletedStepIds(for profileId: UUID, day: Date) -> Set<UUID>
+    func toggleRoutineStepCompleted(profileId: UUID, stepId: UUID, day: Date)
 }
 

@@ -27,6 +27,14 @@ struct ProfileDetailView: View {
         L10n.t("profile.nearby_stores", languageCode: selectedLanguageRaw)
     }
 
+    private var dailyRoutineText: String {
+        L10n.t("profile.daily_routine", languageCode: selectedLanguageRaw)
+    }
+
+    private var shoppingSectionTitle: String {
+        L10n.t("profile.shopping_section", languageCode: selectedLanguageRaw)
+    }
+
     private var notesTitle: String {
         L10n.t("profile.notes", languageCode: selectedLanguageRaw)
     }
@@ -73,24 +81,10 @@ struct ProfileDetailView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    profileHeaderCard
-
-                    VStack(alignment: .leading, spacing: 12) {
-                        AppSectionHeader(title: actionsTitle)
-
-                        NavigationLink {
-                            ShoppingListView(profile: profile, dataService: container.dataService)
-                        } label: {
-                            actionButtonLabel(title: shoppingListText, icon: "checklist")
-                        }
-                        .buttonStyle(SecondaryCardButtonStyle())
-
-                        NavigationLink {
-                            NearbyStoresView(profile: profile)
-                        } label: {
-                            actionButtonLabel(title: nearbyStoresText, icon: "mappin.and.ellipse")
-                        }
-                        .buttonStyle(SecondaryCardButtonStyle())
+                    if accent == .cart {
+                        cartActionsAndHeader
+                    } else {
+                        careHeaderAndActions
                     }
                 }
                 .padding(16)
@@ -119,6 +113,64 @@ struct ProfileDetailView: View {
                 onSaveProfile(updated)
             }
         }
+    }
+
+    private var careHeaderAndActions: some View {
+        Group {
+            profileHeaderCard
+
+            VStack(alignment: .leading, spacing: 12) {
+                AppSectionHeader(title: actionsTitle)
+
+                NavigationLink {
+                    DailyRoutineView(profile: profile, dataService: container.dataService)
+                } label: {
+                    actionButtonLabel(title: dailyRoutineText, icon: "clock.arrow.circlepath")
+                }
+                .buttonStyle(SecondaryCardButtonStyle())
+
+                DisclosureGroup {
+                    VStack(spacing: 12) {
+                        shoppingListLink
+                        nearbyStoresLink
+                    }
+                } label: {
+                    Text(shoppingSectionTitle)
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+
+    private var cartActionsAndHeader: some View {
+        Group {
+            VStack(alignment: .leading, spacing: 12) {
+                AppSectionHeader(title: actionsTitle)
+                shoppingListLink
+                nearbyStoresLink
+            }
+
+            profileHeaderCard
+        }
+    }
+
+    private var shoppingListLink: some View {
+        NavigationLink {
+            ShoppingListView(profile: profile, dataService: container.dataService)
+        } label: {
+            actionButtonLabel(title: shoppingListText, icon: "checklist")
+        }
+        .buttonStyle(SecondaryCardButtonStyle())
+    }
+
+    private var nearbyStoresLink: some View {
+        NavigationLink {
+            NearbyStoresView(profile: profile)
+        } label: {
+            actionButtonLabel(title: nearbyStoresText, icon: "mappin.and.ellipse")
+        }
+        .buttonStyle(SecondaryCardButtonStyle())
     }
 
     private var profileHeaderCard: some View {

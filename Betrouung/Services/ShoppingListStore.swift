@@ -6,15 +6,21 @@ final class LocalDataService: DataService, ObservableObject {
     @Published private(set) var profiles: [CareProfile]
     @Published private(set) var lists: [ShoppingList]
     @Published private(set) var calendarEntriesStore: [CalendarEntry]
+    @Published private(set) var routineTemplates: [DailyRoutineTemplate]
+    @Published private(set) var routineCompletions: [RoutineDayCompletion]
 
     init(
         profiles: [CareProfile],
         lists: [ShoppingList] = [],
-        calendarEntries: [CalendarEntry] = []
+        calendarEntries: [CalendarEntry] = [],
+        routineTemplates: [DailyRoutineTemplate] = [],
+        routineCompletions: [RoutineDayCompletion] = []
     ) {
         self.profiles = profiles
         self.lists = lists
         self.calendarEntriesStore = calendarEntries
+        self.routineTemplates = routineTemplates
+        self.routineCompletions = routineCompletions
     }
 
     convenience init() {
@@ -38,6 +44,8 @@ final class LocalDataService: DataService, ObservableObject {
     func deleteCareProfile(id: UUID) {
         profiles.removeAll { $0.id == id }
         lists.removeAll { $0.profileId == id }
+        routineTemplates = routineTemplates.filter { $0.profileId != id }
+        routineCompletions = routineCompletions.filter { $0.profileId != id }
     }
 
     // MARK: - Shopping lists and items
@@ -119,6 +127,51 @@ final class LocalDataService: DataService, ObservableObject {
     func toggleCalendarEntryCompleted(id: UUID) {
         guard let index = calendarEntriesStore.firstIndex(where: { $0.id == id }) else { return }
         calendarEntriesStore[index].isCompleted.toggle()
+    }
+
+    // MARK: - Daily routine
+
+    func dailyRoutineTemplate(for profileId: UUID) -> DailyRoutineTemplate? {
+        routineTemplates.first { $0.profileId == profileId }
+    }
+
+    func saveDailyRoutineTemplate(_ template: DailyRoutineTemplate) {
+        var next = routineTemplates
+        if let index = next.firstIndex(where: { $0.profileId == template.profileId }) {
+            next[index] = template
+        } else {
+            next.append(template)
+        }
+        routineTemplates = next
+    }
+
+    func routineCompletedStepIds(for profileId: UUID, day: Date) -> Set<UUID> {
+        let start = Calendar.current.startOfDay(for: day)
+        return routineCompletions.first {
+            $0.profileId == profileId && Calendar.current.isDate($0.day, inSameDayAs: start)
+        }?.completedStepIds ?? []
+    }
+
+    func toggleRoutineStepCompleted(profileId: UUID, stepId: UUID, day: Date) {
+        let start = Calendar.current.startOfDay(for: day)
+        var comps = routineCompletions
+        if let index = comps.firstIndex(where: {
+            $0.profileId == profileId && Calendar.current.isDate($0.day, inSameDayAs: start)
+        }) {
+            if comps[index].completedStepIds.contains(stepId) {
+                comps[index].completedStepIds.remove(stepId)
+            } else {
+                comps[index].completedStepIds.insert(stepId)
+            }
+            if comps[index].completedStepIds.isEmpty {
+                comps.remove(at: index)
+            }
+        } else {
+            comps.append(
+                RoutineDayCompletion(profileId: profileId, day: start, completedStepIds: [stepId])
+            )
+        }
+        routineCompletions = comps
     }
 }
 

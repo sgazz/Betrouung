@@ -25,5 +25,10 @@ final class RemoteDataService: DataService {
     func updateCalendarEntry(_ entry: CalendarEntry) {}
     func deleteCalendarEntry(id: UUID) {}
     func toggleCalendarEntryCompleted(id: UUID) {}
+
+    func dailyRoutineTemplate(for profileId: UUID) -> DailyRoutineTemplate? { nil }
+    func saveDailyRoutineTemplate(_ template: DailyRoutineTemplate) {}
+    func routineCompletedStepIds(for profileId: UUID, day: Date) -> Set<UUID> { [] }
+    func toggleRoutineStepCompleted(profileId: UUID, stepId: UUID, day: Date) {}
 }
 

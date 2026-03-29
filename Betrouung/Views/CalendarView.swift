@@ -120,7 +120,8 @@ struct CalendarView: View {
         .sheet(isPresented: $isPresentingAddSheet) {
             DayDetailSheet(
                 selectedDate: viewModel.selectedDate,
-                profiles: viewModel.profiles
+                profiles: viewModel.profiles,
+                defaultKind: accent == .care ? .careReminder : .shopping
             ) { kind, title, notes, date, profileId in
                 if kind == .shopping {
                     viewModel.addShoppingEvent(
@@ -176,11 +177,12 @@ struct CalendarView: View {
 private struct DayDetailSheet: View {
     let selectedDate: Date
     let profiles: [CareProfile]
+    let defaultKind: CalendarEntryKind
     let onSave: (CalendarEntryKind, String, String, Date, UUID?) -> Void
 
     @Environment(\.dismiss) private var dismiss
     @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
-    @State private var kind: CalendarEntryKind = .shopping
+    @State private var kind: CalendarEntryKind
     @State private var profileId: UUID?
     @State private var title = ""
     @State private var notes = ""
@@ -189,11 +191,14 @@ private struct DayDetailSheet: View {
     init(
         selectedDate: Date,
         profiles: [CareProfile],
+        defaultKind: CalendarEntryKind = .shopping,
         onSave: @escaping (CalendarEntryKind, String, String, Date, UUID?) -> Void
     ) {
         self.selectedDate = selectedDate
         self.profiles = profiles
+        self.defaultKind = defaultKind
         self.onSave = onSave
+        _kind = State(initialValue: defaultKind)
         _scheduledAt = State(initialValue: selectedDate)
     }
 

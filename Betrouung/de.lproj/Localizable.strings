@@ -36,6 +36,8 @@
 "home.no_profiles_title" = "Noch keine Profile";
 "home.no_profiles_subtitle" = "Tippen Sie auf +, um Ihr erstes Pflegeprofil hinzuzufuegen.";
 "home.calendar_reminders" = "Kalender und Erinnerungen";
+"home.calendar_row_care" = "Kalender und Pflege-Erinnerungen";
+"home.calendar_row_cart" = "Kalender und Einkauf";
 "home.add_profile" = "Profil hinzufuegen";
 
 "create_profile.title" = "Neues Profil";
@@ -60,8 +62,19 @@
 "create_profile.validation.empty_guardian_contact" = "Kontakt der Betreuungsperson ist erforderlich.";
 
 "profile.actions" = "Aktionen";
+"profile.daily_routine" = "Tagesroutine";
+"profile.shopping_section" = "Einkauf";
 "profile.shopping_list" = "Einkaufsliste";
 "profile.nearby_stores" = "Supermaerkte in der Naehe";
+
+"routine.title" = "Tagesroutine";
+"routine.empty" = "Noch keine Schritte. Tippen Sie auf Bearbeiten.";
+"routine.edit" = "Bearbeiten";
+"routine.done_editing" = "Fertig";
+"routine.add_step" = "Schritt hinzufuegen";
+"routine.step_placeholder" = "Aktivitaet";
+"routine.today" = "Heute";
+"routine.time" = "Zeit";
 "profile.notes" = "Notizen";
 "profile.contacts" = "Kontakte";
 "profile.address_not_provided" = "Adresse nicht angegeben";
