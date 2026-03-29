@@ -5,6 +5,7 @@ struct RootView: View {
     @StateObject private var profilesViewModel: CareProfileViewModel
     @StateObject private var authViewModel = AuthViewModel()
     @State private var isShowingSplash = true
+    @State private var hasCompletedCareCartEntry = false
 
     init() {
         let container = AppContainer()
@@ -23,8 +24,20 @@ struct RootView: View {
                     }
                 }
             } else if authViewModel.isAuthenticated {
-                NavigationStack {
-                    HomeView(viewModel: profilesViewModel)
+                if hasCompletedCareCartEntry {
+                    NavigationStack {
+                        HomeView(viewModel: profilesViewModel) {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                hasCompletedCareCartEntry = false
+                            }
+                        }
+                    }
+                } else {
+                    CareCartEntryView {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            hasCompletedCareCartEntry = true
+                        }
+                    }
                 }
             } else {
                 LoginView(viewModel: authViewModel)
@@ -33,6 +46,12 @@ struct RootView: View {
         .environmentObject(container)
         .animation(.easeInOut(duration: 0.25), value: isShowingSplash)
         .animation(.easeInOut(duration: 0.25), value: authViewModel.isAuthenticated)
+        .animation(.easeInOut(duration: 0.25), value: hasCompletedCareCartEntry)
+        .onChange(of: authViewModel.isAuthenticated) { _, isAuthed in
+            if !isAuthed {
+                hasCompletedCareCartEntry = false
+            }
+        }
     }
 }
 

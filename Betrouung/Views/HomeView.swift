@@ -2,6 +2,8 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var viewModel: CareProfileViewModel
+    /// Kada je postavljen (npr. iz RootView), vraća korisnika na Care/Cart izbor.
+    var onBackToCareCart: (() -> Void)? = nil
     @EnvironmentObject private var container: AppContainer
 
     @State private var isPresentingAdd = false
@@ -25,6 +27,10 @@ struct HomeView: View {
 
     private var addProfileLabel: String {
         L10n.t("home.add_profile", languageCode: selectedLanguageRaw)
+    }
+
+    private var backLabel: String {
+        L10n.t("common.back", languageCode: selectedLanguageRaw)
     }
 
     var body: some View {
@@ -113,6 +119,16 @@ struct HomeView: View {
         .navigationTitle(titleText)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            if let onBackToCareCart {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        onBackToCareCart()
+                    } label: {
+                        Label(backLabel, systemImage: "chevron.left")
+                    }
+                    .foregroundStyle(AppPalette.orange)
+                }
+            }
             ToolbarItem(placement: .principal) {
                 AppBrandTitleView(title: titleText)
             }

@@ -6,6 +6,7 @@
 "splash.info_nav_title" = "Informacije";
 "common.got_it" = "Razumem";
 "common.cancel" = "Otkazi";
+"common.back" = "Nazad";
 "info.subtitle" = "Pametna kupovina za svakodnevnu negu.";
 "info.intro" = "DailyCareCart pomaze negovateljima da organizuju i pojednostave svakodnevnu kupovinu za osobe o kojima brinu.";
 "info.with_app" = "Uz ovu aplikaciju mozete:";
@@ -24,6 +25,10 @@
 "login.reset.title" = "Reset lozinke";
 "login.reset.hint" = "Unesite email za reset lozinke.";
 "login.reset.send" = "Posalji reset link";
+
+"care_cart.care" = "Nega";
+"care_cart.cart" = "Korpa";
+"care_cart.subtitle" = "Izaberite kako želite da počnete.";
 
 "home.no_profiles_title" = "Jos nema profila";
 "home.no_profiles_subtitle" = "Tapnite + da dodate prvi profil nege.";

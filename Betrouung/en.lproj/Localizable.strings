@@ -6,6 +6,7 @@
 "splash.info_nav_title" = "Information";
 "common.got_it" = "Got it";
 "common.cancel" = "Cancel";
+"common.back" = "Back";
 "info.subtitle" = "Smart shopping for daily care.";
 "info.intro" = "DailyCareCart helps caregivers organize and simplify everyday shopping for the people they care for.";
 "info.with_app" = "With this app you can:";
@@ -24,6 +25,10 @@
 "login.reset.title" = "Password Reset";
 "login.reset.hint" = "Enter your email for password reset.";
 "login.reset.send" = "Send reset link";
+
+"care_cart.care" = "Care";
+"care_cart.cart" = "Cart";
+"care_cart.subtitle" = "Choose how you want to start.";
 
 "home.no_profiles_title" = "No profiles yet";
 "home.no_profiles_subtitle" = "Tap + to add your first care profile.";

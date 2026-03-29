@@ -6,6 +6,7 @@
 "splash.info_nav_title" = "Informationen";
 "common.got_it" = "Verstanden";
 "common.cancel" = "Abbrechen";
+"common.back" = "Zurueck";
 "info.subtitle" = "Intelligentes Einkaufen fuer die taegliche Pflege.";
 "info.intro" = "DailyCareCart hilft Pflegepersonen, den taeglichen Einkauf fuer die Menschen, die sie betreuen, zu organisieren und zu vereinfachen.";
 "info.with_app" = "Mit dieser App koennen Sie:";
@@ -24,6 +25,10 @@
 "login.reset.title" = "Passwort zuruecksetzen";
 "login.reset.hint" = "Geben Sie Ihre E-Mail fuer das Zuruecksetzen ein.";
 "login.reset.send" = "Reset-Link senden";
+
+"care_cart.care" = "Pflege";
+"care_cart.cart" = "Einkauf";
+"care_cart.subtitle" = "Waehlen Sie, wie Sie starten moechten.";
 
 "home.no_profiles_title" = "Noch keine Profile";
 "home.no_profiles_subtitle" = "Tippen Sie auf +, um Ihr erstes Pflegeprofil hinzuzufuegen.";
