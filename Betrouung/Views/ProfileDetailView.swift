@@ -3,6 +3,7 @@ import SwiftUI
 struct ProfileDetailView: View {
     let onSaveProfile: (CareProfile) -> Void
     @ObservedObject var profilesViewModel: CareProfileViewModel
+    @Environment(\.appFlowAccent) private var accent
     @EnvironmentObject private var container: AppContainer
     @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
     @State private var profile: CareProfile
@@ -179,7 +180,7 @@ struct ProfileDetailView: View {
             if telDigits.count >= 6, let url = URL(string: "tel:\(telDigits)") {
                 Link(phone.isEmpty ? emptyPhoneText : phone, destination: url)
                     .font(.body)
-                    .foregroundStyle(AppPalette.orange)
+                    .foregroundStyle(accent.primary)
             } else {
                 Text(phone.isEmpty ? emptyPhoneText : phone)
                     .font(.body)
@@ -197,7 +198,7 @@ struct ProfileDetailView: View {
             if !email.isEmpty, email.contains("@"), let url = URL(string: "mailto:\(email)") {
                 Link(email, destination: url)
                     .font(.body)
-                    .foregroundStyle(AppPalette.orange)
+                    .foregroundStyle(accent.primary)
             } else {
                 Text(email.isEmpty ? emptyEmailText : email)
                     .font(.body)
@@ -210,7 +211,7 @@ struct ProfileDetailView: View {
         HStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.headline)
-                .foregroundStyle(AppPalette.orange)
+                .foregroundStyle(accent.primary)
             Text(title)
                 .font(.headline)
                 .foregroundStyle(.primary)

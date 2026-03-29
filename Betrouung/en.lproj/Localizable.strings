@@ -26,6 +26,9 @@
 "login.reset.hint" = "Enter your email for password reset.";
 "login.reset.send" = "Send reset link";
 
+"brand.mode_care" = "-Daily Care-";
+"brand.mode_cart" = "-Daily Cart-";
+
 "care_cart.care" = "Care";
 "care_cart.cart" = "Cart";
 "care_cart.subtitle" = "Choose how you want to start.";

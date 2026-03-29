@@ -2,6 +2,7 @@ import SwiftUI
 
 struct VoiceInputButton: View {
     @Binding var text: String
+    @Environment(\.appFlowAccent) private var accent
     @StateObject private var manager = VoiceInputManager()
 
     var body: some View {
@@ -32,7 +33,7 @@ struct VoiceInputButton: View {
         case .listening:
             return AppPalette.red
         case .idle:
-            return AppPalette.orange
+            return accent.primary
         case .unavailable:
             return .gray
         }

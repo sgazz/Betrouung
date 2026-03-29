@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Ulazni ekran posle prijave: Care ili Cart vode na isti Home tok.
 struct CareCartEntryView: View {
-    let onContinue: () -> Void
+    let onContinue: (AppFlowAccent) -> Void
 
     @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
 
@@ -44,7 +44,7 @@ struct CareCartEntryView: View {
                         icon: "heart.text.square.fill",
                         color: AppPalette.green
                     ) {
-                        onContinue()
+                        onContinue(.care)
                     }
 
                     entryButton(
@@ -52,7 +52,7 @@ struct CareCartEntryView: View {
                         icon: "cart.fill",
                         color: AppPalette.orange
                     ) {
-                        onContinue()
+                        onContinue(.cart)
                     }
                 }
                 .padding(.horizontal, 24)
@@ -86,5 +86,5 @@ struct CareCartEntryView: View {
 }
 
 #Preview {
-    CareCartEntryView {}
+    CareCartEntryView { _ in }
 }

@@ -26,6 +26,9 @@
 "login.reset.hint" = "Unesite email za reset lozinke.";
 "login.reset.send" = "Posalji reset link";
 
+"brand.mode_care" = "-Svakodnevna briga-";
+"brand.mode_cart" = "-Svakodnevna korpa-";
+
 "care_cart.care" = "Nega";
 "care_cart.cart" = "Korpa";
 "care_cart.subtitle" = "Izaberite kako želite da počnete.";

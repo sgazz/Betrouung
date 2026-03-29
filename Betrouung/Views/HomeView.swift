@@ -4,6 +4,7 @@ struct HomeView: View {
     @ObservedObject var viewModel: CareProfileViewModel
     /// Kada je postavljen (npr. iz RootView), vraća korisnika na Care/Cart izbor.
     var onBackToCareCart: (() -> Void)? = nil
+    @Environment(\.appFlowAccent) private var accent
     @EnvironmentObject private var container: AppContainer
 
     @State private var isPresentingAdd = false
@@ -62,7 +63,7 @@ struct HomeView: View {
                         } label: {
                             HStack(spacing: 10) {
                                 Image(systemName: "calendar")
-                                    .foregroundStyle(AppPalette.orange)
+                                    .foregroundStyle(accent.primary)
                                 Text(calendarText)
                                     .font(.headline)
                                     .foregroundStyle(.primary)
@@ -107,7 +108,7 @@ struct HomeView: View {
                 Image(systemName: "plus")
                     .font(.headline)
                     .frame(width: 56, height: 56)
-                    .background(AppPalette.orange)
+                    .background(accent.primary)
                     .foregroundStyle(.white)
                     .clipShape(Circle())
                     .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
@@ -126,7 +127,7 @@ struct HomeView: View {
                     } label: {
                         Label(backLabel, systemImage: "chevron.left")
                     }
-                    .foregroundStyle(AppPalette.orange)
+                    .foregroundStyle(accent.primary)
                 }
             }
             ToolbarItem(placement: .principal) {
@@ -152,7 +153,7 @@ struct HomeView: View {
 
             HStack(spacing: 8) {
                 Image(systemName: "person.2.fill")
-                    .foregroundStyle(AppPalette.green)
+                    .foregroundStyle(accent.secondary)
                 Text("\(profile.numberOfPeople) osoba")
                     .font(.body)
                     .foregroundStyle(.secondary)

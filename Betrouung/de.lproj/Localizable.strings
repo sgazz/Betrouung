@@ -26,6 +26,9 @@
 "login.reset.hint" = "Geben Sie Ihre E-Mail fuer das Zuruecksetzen ein.";
 "login.reset.send" = "Reset-Link senden";
 
+"brand.mode_care" = "-Taegliche Pflege-";
+"brand.mode_cart" = "-Taeglicher Einkauf-";
+
 "care_cart.care" = "Pflege";
 "care_cart.cart" = "Einkauf";
 "care_cart.subtitle" = "Waehlen Sie, wie Sie starten moechten.";

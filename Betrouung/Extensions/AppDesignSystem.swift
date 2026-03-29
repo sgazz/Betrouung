@@ -6,13 +6,104 @@ enum AppPalette {
     static let red = Color.red
 }
 
+/// Tema nakon izbora Care (zelena) ili Cart (narandžasta); neutral za splash/login/CareCart ulaz.
+enum AppFlowAccent: Hashable {
+    case neutral
+    case care
+    case cart
+
+    /// Primarni akcent (FAB, fokus polja, ikone akcija, linkovi).
+    var primary: Color {
+        switch self {
+        case .neutral, .cart:
+            return AppPalette.orange
+        case .care:
+            return AppPalette.green
+        }
+    }
+
+    /// Sekundarni akcent za varijacije (npr. druga nijansa u pozadini).
+    var secondary: Color {
+        switch self {
+        case .neutral, .care:
+            return AppPalette.green
+        case .cart:
+            return AppPalette.orange
+        }
+    }
+
+    var gradientMid: Color {
+        switch self {
+        case .neutral:
+            return AppPalette.orange.opacity(0.06)
+        case .care:
+            return AppPalette.green.opacity(0.08)
+        case .cart:
+            return AppPalette.orange.opacity(0.1)
+        }
+    }
+
+    var orbTopLeading: Color {
+        switch self {
+        case .neutral:
+            return AppPalette.orange.opacity(0.16)
+        case .care:
+            return AppPalette.green.opacity(0.18)
+        case .cart:
+            return AppPalette.orange.opacity(0.2)
+        }
+    }
+
+    var orbBottomTrailing: Color {
+        switch self {
+        case .neutral:
+            return AppPalette.green.opacity(0.12)
+        case .care:
+            return AppPalette.green.opacity(0.1)
+        case .cart:
+            return AppPalette.orange.opacity(0.09)
+        }
+    }
+
+    /// Slika za blagi vodeni žig u pozadini (samo Care / Cart).
+    var backgroundWatermarkAssetName: String? {
+        switch self {
+        case .neutral:
+            return nil
+        case .care:
+            return "FlowModeCareWatermark"
+        case .cart:
+            return "FlowModeCartWatermark"
+        }
+    }
+}
+
+private struct AppFlowAccentKey: EnvironmentKey {
+    static let defaultValue: AppFlowAccent = .neutral
+}
+
+extension EnvironmentValues {
+    var appFlowAccent: AppFlowAccent {
+        get { self[AppFlowAccentKey.self] }
+        set { self[AppFlowAccentKey.self] = newValue }
+    }
+}
+
 struct AppBackgroundView: View {
+    @Environment(\.appFlowAccent) private var accent
+    @Environment(\.colorScheme) private var colorScheme
+
+    /// Vodeni žig kao „wireframe“: template-rendering boji linije kontura (izgled obrisa, bez punila).
+    private var watermarkAlpha: Double {
+        colorScheme == .dark ? 0.22 : 0.12
+    }
+
     var body: some View {
         ZStack {
             LinearGradient(
                 colors: [
                     Color(.systemBackground),
-                    AppPalette.orange.opacity(0.06),
+                    accent.gradientMid,
                     Color(.secondarySystemBackground)
                 ],
                 startPoint: .topLeading,
@@ -21,14 +112,29 @@ struct AppBackgroundView: View {
             .ignoresSafeArea()
 
             Circle()
-                .fill(AppPalette.orange.opacity(0.16))
+                .fill(accent.orbTopLeading)
                 .frame(width: 260, height: 260)
                 .offset(x: -110, y: -250)
 
             Circle()
-                .fill(AppPalette.green.opacity(0.12))
+                .fill(accent.orbBottomTrailing)
                 .frame(width: 220, height: 220)
                 .offset(x: 120, y: 260)
+
+            if let watermarkName = accent.backgroundWatermarkAssetName {
+                GeometryReader { geo in
+                    Image(watermarkName)
+                        .renderingMode(.template)
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFit()
+                        .frame(width: min(geo.size.width * 0.62, 340), height: min(geo.size.height * 0.38, 320))
+                        .foregroundStyle(accent.primary.opacity(watermarkAlpha))
+                        .position(x: geo.size.width * 0.5, y: geo.size.height * 0.58)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .allowsHitTesting(false)
+            }
         }
     }
 }
@@ -79,24 +185,52 @@ struct AppSectionHeader: View {
 
 struct AppBrandTitleView: View {
     let title: String
+    @Environment(\.appFlowAccent) private var accent
+    @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
+
+    private var modeTagline: String? {
+        switch accent {
+        case .neutral:
+            return nil
+        case .care:
+            return L10n.t("brand.mode_care", languageCode: selectedLanguageRaw)
+        case .cart:
+            return L10n.t("brand.mode_cart", languageCode: selectedLanguageRaw)
+        }
+    }
+
+    private var accessibilityTitle: String {
+        if let modeTagline {
+            return "\(title), \(modeTagline)"
+        }
+        return title
+    }
 
     var body: some View {
-        HStack(spacing: 8) {
-            Image("BrandLogo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 20, height: 20)
-                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-            Text(title)
-                .font(.headline)
-                .foregroundStyle(.primary)
+        VStack(spacing: 2) {
+            HStack(spacing: 8) {
+                Image("BrandLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+                Text(title)
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+            }
+            if let modeTagline {
+                Text(modeTagline)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(accent.primary)
+            }
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(title)
+        .accessibilityLabel(accessibilityTitle)
     }
 }
 
 struct AppInputFieldModifier: ViewModifier {
+    @Environment(\.appFlowAccent) private var accent
     let isFocused: Bool
 
     func body(content: Content) -> some View {
@@ -106,7 +240,7 @@ struct AppInputFieldModifier: ViewModifier {
             .background(Color(.secondarySystemBackground))
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(isFocused ? AppPalette.orange.opacity(0.75) : Color.clear, lineWidth: 1.5)
+                    .stroke(isFocused ? accent.primary.opacity(0.75) : Color.clear, lineWidth: 1.5)
             )
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .animation(.easeInOut(duration: 0.16), value: isFocused)

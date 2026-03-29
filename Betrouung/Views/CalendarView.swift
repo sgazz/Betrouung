@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct CalendarView: View {
+    @Environment(\.appFlowAccent) private var accent
     @StateObject private var viewModel: CalendarViewModel
     @State private var isPresentingAddSheet = false
     @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
@@ -111,7 +112,7 @@ struct CalendarView: View {
                     isPresentingAddSheet = true
                 } label: {
                     Image(systemName: "plus.circle.fill")
-                        .foregroundStyle(AppPalette.orange)
+                        .foregroundStyle(accent.primary)
                 }
                 .accessibilityLabel(addEntryA11yText)
             }

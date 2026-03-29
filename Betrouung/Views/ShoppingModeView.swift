@@ -3,6 +3,7 @@ import SwiftUI
 struct ShoppingModeView: View {
     @ObservedObject var viewModel: ShoppingListViewModel
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.appFlowAccent) private var accent
     @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
 
     private var finishText: String {
@@ -21,7 +22,7 @@ struct ShoppingModeView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [Color.black, AppPalette.orange.opacity(0.35), Color(.darkGray)],
+                colors: [Color.black, accent.primary.opacity(0.35), Color(.darkGray)],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -72,7 +73,7 @@ struct ShoppingModeView: View {
                 Label(finishText, systemImage: "checkmark")
                     .font(.headline)
                     .frame(maxWidth: .infinity, minHeight: 56)
-                    .background(AppPalette.green)
+                    .background(accent.primary)
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
             }

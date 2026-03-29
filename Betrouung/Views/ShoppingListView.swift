@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ShoppingListView: View {
     let profile: CareProfile
+    @Environment(\.appFlowAccent) private var accent
 
     @StateObject private var viewModel: ShoppingListViewModel
     @State private var newItemName = ""
@@ -57,7 +58,7 @@ struct ShoppingListView: View {
                                     } label: {
                                         Label(suggestion.capitalized, systemImage: "plus.circle.fill")
                                             .font(.headline)
-                                            .foregroundStyle(AppPalette.orange)
+                                            .foregroundStyle(accent.primary)
                                             .padding(.horizontal, 12)
                                             .padding(.vertical, 8)
                                             .appGlassCard()
@@ -155,7 +156,7 @@ struct ShoppingListView: View {
                     Image(systemName: "plus")
                         .font(.headline)
                         .frame(width: 50, height: 50)
-                        .background(AppPalette.orange)
+                        .background(accent.primary)
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
@@ -169,7 +170,7 @@ struct ShoppingListView: View {
             } label: {
                 Label(shoppingModeText, systemImage: "cart.fill")
                     .font(.headline)
-                    .foregroundStyle(AppPalette.orange)
+                    .foregroundStyle(accent.primary)
                     .frame(maxWidth: .infinity, minHeight: 50)
                     .appGlassCard()
             }

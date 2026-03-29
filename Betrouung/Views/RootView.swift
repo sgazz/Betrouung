@@ -6,6 +6,7 @@ struct RootView: View {
     @StateObject private var authViewModel = AuthViewModel()
     @State private var isShowingSplash = true
     @State private var hasCompletedCareCartEntry = false
+    @State private var flowAccent: AppFlowAccent = .neutral
 
     init() {
         let container = AppContainer()
@@ -28,13 +29,17 @@ struct RootView: View {
                     NavigationStack {
                         HomeView(viewModel: profilesViewModel) {
                             withAnimation(.easeInOut(duration: 0.25)) {
+                                flowAccent = .neutral
                                 hasCompletedCareCartEntry = false
                             }
                         }
                     }
+                    .environment(\.appFlowAccent, flowAccent)
+                    .tint(flowAccent.primary)
                 } else {
-                    CareCartEntryView {
+                    CareCartEntryView { choice in
                         withAnimation(.easeInOut(duration: 0.25)) {
+                            flowAccent = choice
                             hasCompletedCareCartEntry = true
                         }
                     }
@@ -50,6 +55,7 @@ struct RootView: View {
         .onChange(of: authViewModel.isAuthenticated) { _, isAuthed in
             if !isAuthed {
                 hasCompletedCareCartEntry = false
+                flowAccent = .neutral
             }
         }
     }
@@ -58,4 +64,3 @@ struct RootView: View {
 #Preview {
     RootView()
 }
-

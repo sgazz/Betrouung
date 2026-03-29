@@ -3,6 +3,7 @@ import SwiftUI
 
 struct NearbyStoresView: View {
     let profile: CareProfile
+    @Environment(\.appFlowAccent) private var accent
     @StateObject private var viewModel = StoreViewModel()
     @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
 
@@ -138,7 +139,7 @@ struct NearbyStoresView: View {
                             HStack(spacing: 12) {
                                 Image(systemName: "building.2.crop.circle.fill")
                                     .font(.title3)
-                                    .foregroundStyle(AppPalette.orange)
+                                    .foregroundStyle(accent.primary)
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(store.name)
                                         .font(.body.weight(.bold))
@@ -174,7 +175,7 @@ struct NearbyStoresView: View {
         VStack(spacing: 16) {
             Image(systemName: "location.circle")
                 .font(.system(size: 48))
-                .foregroundStyle(AppPalette.orange)
+                .foregroundStyle(accent.primary)
             Text(locationAccessTitle)
                 .font(.title2.bold())
             Text(locationAccessDesc)
