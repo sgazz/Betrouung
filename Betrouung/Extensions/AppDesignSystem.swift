@@ -23,13 +23,11 @@ struct AppBackgroundView: View {
             Circle()
                 .fill(AppPalette.orange.opacity(0.16))
                 .frame(width: 260, height: 260)
-                .blur(radius: 26)
                 .offset(x: -110, y: -250)
 
             Circle()
                 .fill(AppPalette.green.opacity(0.12))
                 .frame(width: 220, height: 220)
-                .blur(radius: 30)
                 .offset(x: 120, y: 260)
         }
     }
@@ -38,12 +36,15 @@ struct AppBackgroundView: View {
 struct AppGlassCardModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .background(
+                Color(.secondarySystemBackground).opacity(0.94),
+                in: RoundedRectangle(cornerRadius: 18, style: .continuous)
+            )
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(Color.white.opacity(0.18), lineWidth: 1)
+                    .stroke(Color.white.opacity(0.12), lineWidth: 1)
             )
-            .shadow(color: .black.opacity(0.08), radius: 16, x: 0, y: 8)
+            .shadow(color: .black.opacity(0.05), radius: 6, x: 0, y: 3)
     }
 }
 

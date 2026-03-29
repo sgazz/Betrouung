@@ -118,7 +118,7 @@ struct ShoppingListView: View {
         }
         .safeAreaInset(edge: .bottom) {
             addItemBar
-                .background(.ultraThinMaterial)
+                .background(Color(.systemBackground).opacity(0.96))
         }
         .onAppear { viewModel.refresh() }
         .fullScreenCover(isPresented: $isShowingShoppingMode) {

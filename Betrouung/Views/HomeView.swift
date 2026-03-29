@@ -73,7 +73,9 @@ struct HomeView: View {
 
                     ForEach(viewModel.filteredProfiles) { profile in
                         NavigationLink {
-                            ProfileDetailView(profile: profile)
+                            ProfileDetailView(profile: profile, profilesViewModel: viewModel) { updated in
+                                viewModel.updateProfile(updated)
+                            }
                         } label: {
                             profileCard(profile)
                         }

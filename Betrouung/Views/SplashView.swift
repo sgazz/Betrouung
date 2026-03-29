@@ -2,7 +2,6 @@ import SwiftUI
 
 struct SplashView: View {
     let onContinue: () -> Void
-    @State private var animate = false
     @State private var sloganIndex = 0
     @State private var isShowingInfoSheet = false
     @AppStorage("app.language") private var selectedLanguageRaw = AppLanguage.english.rawValue
@@ -57,7 +56,6 @@ struct SplashView: View {
                         .scaledToFit()
                         .frame(width: 110, height: 110)
                         .shadow(color: AppPalette.orange.opacity(0.2), radius: 12, x: 0, y: 8)
-                    .scaleEffect(animate ? 1 : 0.94)
 
                     Text("DailyCareCart")
                         .font(.system(size: 34, weight: .bold, design: .rounded))
@@ -75,7 +73,7 @@ struct SplashView: View {
                 Text(tapToContinueText)
                     .font(.headline)
                     .foregroundStyle(AppPalette.orange)
-                    .opacity(animate ? 1.0 : 0.7)
+                    .opacity(0.9)
 
                 Picker("Language", selection: $selectedLanguageRaw) {
                     ForEach(AppLanguage.allCases) { language in
@@ -102,17 +100,10 @@ struct SplashView: View {
             }
             .padding(.horizontal, 24)
         }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 1.3).repeatForever(autoreverses: true)) {
-                animate = true
-            }
-        }
         .task {
-            while true {
+            while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 2_200_000_000)
-                withAnimation(.easeInOut(duration: 0.35)) {
-                    sloganIndex = (sloganIndex + 1) % slogans.count
-                }
+                sloganIndex = (sloganIndex + 1) % slogans.count
             }
         }
         .sheet(isPresented: $isShowingInfoSheet) {

@@ -31,9 +31,8 @@ final class LocationManager: NSObject, ObservableObject {
 
         switch authorizationStatus {
         case .notDetermined:
-            // Request authorization; we'll get a callback to update `authorizationStatus`
-            manager.requestWhenInUseAuthorization()
-            // Do not call requestLocation() yet; wait for authorization callback
+            // Do not prompt here; wait for the app to call requestWhenInUsePermission(), then handle in delegate callback
+            return
         case .restricted, .denied:
             // Surface a clear error to the UI
             locationError = "Pristup lokaciji je odbijen ili ograničen."
